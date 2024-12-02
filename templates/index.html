@@ -7,33 +7,34 @@ Welcome
 {% block main %}
 <div class="welcome">
   <div class="container separate flex column center-justify">
-    <h1 class="h2">Welcome, {{ username }}.</h1>
+    <h1 class="h1 no-margin">Welcome, {{ username }}.</h1>
     <p>Ready for workout?</p>
   </div>
   <div class="container separate grid">
     <div class="card">
-      <a class="flex column between-justify" href="">
-        <h3 class="h3">Start workout</h3>
-        <p>Use one of your routines and let Fitzz guide your training.</p>
+      <a class="flex column between-justify" href="/workouts/start">
+        <h3 class="h3 no-margin">Start workout</h3>
+        <p class="no-margin">Use one of your routines and let Fitzz guide your training.</p>
       </a>
     </div>
     <div class="card">
-      <a class="flex column between-justify" href="">
-        <h3 class="h3">Workouts</h3>
-        <p>Review workout history.</p>
+      <a class="flex column between-justify" href="/workouts">
+        <h3 class="h3 no-margin">Workouts</h3>
+        <p class="no-margin">Review workout history.</p>
       </a>
     </div>
     <div class="card">
-      <a class="flex column between-justify" href="">
-        <h3 class="h3">Routines</h3>
-        <p>Review and change the weight, reps, or sets of your routines, or create new ones.</p>
+      <a class="flex column between-justify" href="/routines">
+        <h3 class="h3 no-margin">Routines</h3>
+        <p class="no-margin">Review and change the weight, reps, or sets of your routines, or create new ones.</p>
       </a>
     </div>
     <div class="card">
-      <a class="flex column between-justify" href="">
-        <h3 class="h3">Statistics</h3>
-        <p>View your muscle distribution for the month or all time.</p>
+      <a class="flex column between-justify" href="/statistics">
+        <h3 class="h3 no-margin">Statistics</h3>
+        <p class="no-margin">View your muscle distribution for the month or all time.</p>
       </a>
     </div>
   </div>
-  {% endblock %}
+</div>
+{% endblock %}
