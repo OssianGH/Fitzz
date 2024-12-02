@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Error
+{% endblock %}
+
+{% block main %}
+<div class="errorpage">
+  <div class="displayer">
+    <div class="box flex column center-justify">
+      <div class="flex gap center-align">
+        <img alt="burger" src="/static/images/burger.webp">
+        <h1 class="h3">Error</h1>
+      </div>
+      <p>{{ message }}</p>
+      <div class="quote">Don't eat the wrong meal.</div>
+      <button class="btn" onclick="window.history.back()">Go back</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
