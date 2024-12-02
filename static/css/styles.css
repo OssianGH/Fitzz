@@ -318,11 +318,12 @@ header button:active {
 
 .card .h3 {
   color: var(--c-dark-blue);
+  margin-bottom: 0;
 }
 
 .card p {
   font-weight: 400;
-  color: var(--c-paragraph);
+  margin-bottom: 0;
 }
 
 
