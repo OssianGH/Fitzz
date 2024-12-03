@@ -182,9 +182,9 @@ header button:active {
 }
 
 .input {
+  width: 100%;
   font-size: 0.9rem;
   padding: 0.9rem 1.2rem;
-  margin-top: 1.8rem;
   border-radius: 2rem;
   font-weight: 600;
   font-family: inherit;
@@ -194,9 +194,17 @@ header button:active {
   color: var(--c-dark-blue);
 }
 
+.input.cover {
+  width: 100%;
+}
+
 .input.active+.input-label {
   top: 0;
   left: 0;
+}
+
+.input-group .input {
+  margin-top: 1.8rem;
 }
 
 .input-label {
@@ -494,6 +502,10 @@ header button:active {
   .division-side.right {
     width: 40%;
     height: 100%;
+  }
+
+  .input {
+    width: 21rem;
   }
 }
 
