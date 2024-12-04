@@ -8,11 +8,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet">
   <link href="/static/dumbbell.ico" rel="icon">
   <link href="/static/css/styles.css" rel="stylesheet">
-  {% if session.get("user_id") %}
-  <script src="/static/js/collapse.js"></script>
-  {% endif %}
-  <script src="/static/js/input.js"></script>
-  <script src="/static/js/addSet.js"></script>
+  {% block scripts %}{% endblock %}
   <title>Fitzz - {% block title %}{% endblock %}</title>
 </head>
 
@@ -41,7 +37,6 @@
     <button id="collapse-toggle"><i class="fa fa-bars"></i></button>
   </header>
   {% endif %}
-
   <main>
     {% block main %}{% endblock %}
   </main>
