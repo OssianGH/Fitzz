@@ -49,20 +49,20 @@ svg {
 
 /* TEXT */
 .h1 {
-  font-size: 2.9rem;
+  font-size: 3.2rem;
   font-weight: 700;
   margin-bottom: 1rem;
   color: var(--c-dark-blue);
 }
 
 .h2 {
-  font-size: 2.4rem;
+  font-size: 2.3rem;
   font-weight: 700;
   color: var(--c-dark-blue);
 }
 
 .h3 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
   color: var(--c-dark-blue);
@@ -218,6 +218,29 @@ header button:active {
   color: var(--c-dark-blue);
 }
 
+.special-input {
+  width: 100%;
+  font-size: 2.3rem;
+  font-weight: 700;
+  font-family: inherit;
+  outline: none;
+  border: none;
+  transition: all 0.2s ease;
+  color: var(--c-dark-blue);
+}
+
+.special-input:focus {
+  font-size: 0.9rem;
+  padding: 0.9rem 1.2rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  background-color: var(--c-almond);
+}
+
+::placeholder {
+  color: gray;
+  font-style: italic;
+}
 
 /* BUTTON */
 .btn {
