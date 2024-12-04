@@ -550,6 +550,10 @@ header button:active {
   .input {
     width: 21rem;
   }
+
+  .special-input:focus {
+    width: 21rem;
+  }
 }
 
 /* X-Large devices (large desktops, 1200px and up) */
