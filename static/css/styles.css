@@ -444,20 +444,20 @@ header button:active {
 
 .exercise .exercise-name {
   background-color: var(--c-almond);
-  padding: 0.4rem;
+  padding: 0.6rem;
   margin-bottom: 1rem;
 }
 
 .exercise .exercise-image {
   width: 5rem;
   border-radius: 1rem;
-  background-color: var(--c-white);
   margin: 0.4rem;
+  background-color: var(--c-white);
   border: 3px solid var(--c-dark-blue);
 }
 
 .exercise .exercise-set p {
-  width: 1rem;
+  width: 2rem;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--c-dark-blue);
