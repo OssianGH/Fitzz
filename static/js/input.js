@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', onContentLoad);
 
 function onContentLoad(event) {
   // Select all input elements with the class 'input'
-  const inputs = document.querySelectorAll('.input');
+  const inputs = document.querySelectorAll('.input-group .input');
 
   // Loop through each input
   inputs.forEach(input => {
