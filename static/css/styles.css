@@ -412,6 +412,19 @@ header button:active {
 }
 
 
+/* LINE */
+.line {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--c-dark-blue);
+}
+
+.line.short {
+  width: min(100%, 22rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* MEDIA QUERIES */
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
