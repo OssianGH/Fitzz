@@ -1,9 +1,8 @@
 // Wait for DOM content to load
 document.addEventListener('DOMContentLoaded', onContentLoad);
 
-
 function onContentLoad(event) {
-  // Select all input elements with the class 'input'
+  // Select all elements with the class 'input' inside the class 'input-group'
   const inputs = document.querySelectorAll('.input-group .input');
 
   // Loop through each input

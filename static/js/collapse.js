@@ -6,8 +6,10 @@ function onContentLoad(event) {
   document.getElementById("collapse-toggle").addEventListener("click", collapseToggle);
 }
 
-// Toggle the navbar menu
 function collapseToggle() {
+  // Select the navbar element
   const nav = document.getElementById("navbar")
+
+  // Toggle the navbar menu
   nav.classList.toggle("active");
 }

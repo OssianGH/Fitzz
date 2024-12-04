@@ -97,6 +97,31 @@ def logout():
     return redirect("/")
 
 
+@app.route("/routines")
+@login_required
+def routines():
+    """Show user's routines"""
+
+    # Display routines page
+    return display_error("Esto aún no está implementado.")
+
+
+@app.route("/routines/new", methods=["GET", "POST"])
+@login_required
+def routines_new():
+    """Create a new routine"""
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+        # Redirect user to routines page
+        return redirect("/routines")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        # Display new routine page
+        return render_template("routines_new.html")
+
+
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     """Register user"""
