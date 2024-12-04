@@ -1,15 +1,13 @@
 // Wait for DOM content to load
-document.addEventListener('DOMContentLoaded', onContentLoad);
+document.addEventListener('DOMContentLoaded', () => {
+  // Add click event listener to the Toggle nav button
+  document.getElementById('toggle-nav').addEventListener('click', toggleNav);
+});
 
-function onContentLoad(event) {
-  // Add event listener to the collapse button
-  document.getElementById("collapse-toggle").addEventListener("click", collapseToggle);
-}
+const toggleNav = () => {
+  // Get the nav element
+  const navElement = document.getElementById('nav');
 
-function collapseToggle() {
-  // Select the navbar element
-  const nav = document.getElementById("navbar")
-
-  // Toggle the navbar menu
-  nav.classList.toggle("active");
+  // Toggle the nav element visibility
+  navElement.classList.toggle('active');
 }
