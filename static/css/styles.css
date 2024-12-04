@@ -420,7 +420,7 @@ header button:active {
 }
 
 .line.short {
-  width: min(100%, 22rem);
+  width: min(100%, 30rem);
   margin-left: auto;
   margin-right: auto;
 }
