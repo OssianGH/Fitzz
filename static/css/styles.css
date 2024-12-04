@@ -225,6 +225,7 @@ header button:active {
   font-family: inherit;
   outline: none;
   border: none;
+  margin-bottom: 0.4rem;
   transition: all 0.2s ease;
   color: var(--c-dark-blue);
 }
