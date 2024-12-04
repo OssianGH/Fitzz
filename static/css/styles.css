@@ -438,7 +438,7 @@ header button:active {
 /* LINE */
 .line {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   border-bottom: 1px solid var(--c-dark-blue);
 }
 
