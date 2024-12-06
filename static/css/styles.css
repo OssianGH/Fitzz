@@ -522,8 +522,18 @@ header button:active {
   overflow-y: scroll;
   padding: 1rem;
   border-radius: 0.6rem;
+  opacity: 0;
+  transform: scale(0.9);
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
   background-color: var(--c-brown);
+}
+
+.overlay.active .overlay-content {
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
 }
 
 .overlay.active {
