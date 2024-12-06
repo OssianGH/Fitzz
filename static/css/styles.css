@@ -515,6 +515,16 @@ header button:active {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.overlay.active {
+  visibility: visible;
+}
+
+.overlay.active .overlay-content {
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
+}
+
 .overlay-content {
   position: relative;
   height: 97%;
@@ -528,16 +538,6 @@ header button:active {
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
   background-color: var(--c-brown);
-}
-
-.overlay.active .overlay-content {
-  opacity: 1;
-  transform: scale(1);
-  visibility: visible;
-}
-
-.overlay.active {
-  visibility: visible;
 }
 
 .overlay-content .square-btn {
