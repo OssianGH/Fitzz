@@ -104,10 +104,13 @@ header img {
   height: 100%;
 }
 
+header .square-btn {
+  display: block;
+}
+
 
 /* SQUARE BUTTON */
 .square-btn {
-  display: block;
   width: 2.4rem;
   height: 2.4rem;
   border: none;
