@@ -1,7 +1,7 @@
 // Wait for DOM content to load
 document.addEventListener('DOMContentLoaded', () => {
   // Add click event listener to the Add exercise button
-  document.getElementById('add-exercise').addEventListener('click', addExercise)
+  document.getElementById('add-exercise').addEventListener('click', addExercise);
 });
 
 function addExercise() {
@@ -44,7 +44,9 @@ function addExercise() {
   </div>
   `;
 
+  // newExercise.querySelector("#add-set").addEventListener("click", addSet);
+
   // Append the new exercise to the exercises container
   exercisesContainer.appendChild(newExercise);
+  window.bindInputListeners();
 }
-
