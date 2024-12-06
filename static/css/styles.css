@@ -104,7 +104,9 @@ header img {
   height: 100%;
 }
 
-header button {
+
+/* SQUARE BUTTON */
+.square-btn {
   display: block;
   width: 2.4rem;
   height: 2.4rem;
@@ -112,15 +114,16 @@ header button {
   cursor: pointer;
   border-radius: 0.5rem;
   font-size: 1.25rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   background-color: var(--c-white);
   color: var(--c-dark-blue);
 }
 
-header button:hover {
+.square-btn:hover {
   background-color: #E5E5E4;
 }
 
-header button:active {
+.square-btn:active {
   transform: scale(0.95);
 }
 
@@ -609,7 +612,7 @@ header button:active {
     margin-top: 2.5rem;
   }
 
-  header>button {
+  header .square-btn {
     display: none;
   }
 
