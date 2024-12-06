@@ -522,11 +522,14 @@ header img {
   z-index: 1000;
   display: grid;
   place-items: center;
+  opacity: 0;
   visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
 .overlay.active {
+  opacity: 1;
   visibility: visible;
 }
 
