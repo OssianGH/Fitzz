@@ -151,8 +151,8 @@ header img {
 }
 
 .collapse>ul>li {
-  transition: all 0.2s ease-in-out 0ms;
   list-style: none;
+  transition: background-color 0.4s ease-in;
 }
 
 .collapse>ul>li:hover {
@@ -162,9 +162,9 @@ header img {
 .collapse>ul>li>a {
   font-size: 1rem;
   font-weight: 500;
+  transition: color 0.3s ease;
   color: var(--c-white);
 }
-
 
 .collapse>ul>li>a>span {
   display: block;
@@ -211,10 +211,12 @@ header img {
   font-size: 1rem;
   font-weight: 600;
   pointer-events: none;
-  transition: all 0.2s ease;
+  transition: top 0.2s ease-in-out, left 0.2s ease-in-out;
   color: var(--c-dark-blue);
 }
 
+
+/* SPECIAL INPUT */
 .special-input {
   width: 100%;
   font-size: 2.3rem;
@@ -223,7 +225,7 @@ header img {
   outline: none;
   border: none;
   margin-bottom: 0.4rem;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   color: var(--c-dark-blue);
 }
 
@@ -240,6 +242,7 @@ header img {
   font-style: italic;
 }
 
+
 /* BUTTON */
 .btn {
   font-size: 1rem;
@@ -249,7 +252,7 @@ header img {
   font-family: inherit;
   cursor: pointer;
   border: none;
-  transition: all 0.2s ease-in-out 0ms;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease;
   background-color: var(--c-brown);
   color: var(--c-white);
 }
@@ -326,7 +329,7 @@ header img {
   width: 10rem;
   height: 13.5rem;
   border-radius: 0.8rem;
-  transition: transform 0.5s;
+  transition: transform 0.3s ease;
   box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
   background-color: var(--c-almond);
 }
