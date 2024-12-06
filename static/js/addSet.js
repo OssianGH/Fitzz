@@ -1,7 +1,7 @@
 // Wait for DOM content to load
 document.addEventListener('DOMContentLoaded', () => {
   // Add click event listener to the Add set button
-  document.getElementById('add-set').addEventListener('click', addSet)
+  document.getElementById('add-set').addEventListener('click', addSet);
 });
 
 const addSet = () => {
