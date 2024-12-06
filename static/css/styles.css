@@ -318,10 +318,13 @@ header button:active {
 }
 
 
-/* CARD */
-.container a {
-  width: 100%;
-  height: 100%;
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10.6rem, 1fr));
+  grid-auto-rows: min-content;
+  place-items: center;
+  row-gap: 1rem;
 }
 
 .card {
@@ -504,6 +507,11 @@ header button:active {
 
   .container.separate {
     margin-top: 2rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(15.6rem, 1fr));
+    row-gap: 2rem;
   }
 }
 
