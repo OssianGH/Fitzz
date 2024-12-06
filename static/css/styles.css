@@ -516,6 +516,7 @@ header button:active {
 }
 
 .overlay-content {
+  position: relative;
   height: 97%;
   width: 97%;
   overflow-y: scroll;
@@ -527,6 +528,13 @@ header button:active {
 
 .overlay.active {
   visibility: visible;
+}
+
+.overlay-content .square-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
 }
 
 
