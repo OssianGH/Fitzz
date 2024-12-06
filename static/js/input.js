@@ -1,5 +1,13 @@
 // Wait for DOM content to load
 document.addEventListener('DOMContentLoaded', () => {
+  // Bind event listeners initially
+  bindInputListeners();
+
+  // Expose the bindEventListeners function globally
+  window.bindInputListeners = bindInputListeners;
+});
+
+function bindInputListeners() {
   // Select all elements with the class 'input' inside the class 'input-group'
   const inputs = document.querySelectorAll('.input-group .input');
 
@@ -19,4 +27,4 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-});
+}
