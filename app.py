@@ -116,6 +116,23 @@ def routines():
 def routines_new():
     """Create a new routine"""
 
+    # Query database for muscle groups
+    muscle_groups = db.execute("SELECT * FROM muscle_group")
+
+    # Create a dictionary to store exercises by muscle groups
+    exercises_by_muscle = defaultdict(list)
+
+    # Loop through muscle groups
+    for muscle_group in muscle_groups:
+        # Query database for exercises of the current muscle group
+        exercises = db.execute(
+            "SELECT id, name FROM exercise WHERE muscle_group_id = ?",
+            muscle_group["id"],
+        )
+
+        # Add exercises to the dictionary
+        exercises_by_muscle[muscle_group["name"]].extend(exercises)
+
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
         # Redirect user to routines page
@@ -124,7 +141,10 @@ def routines_new():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         # Display new routine page
-        return render_template("routines_new.html")
+        return render_template(
+            "routines_new.html",
+            exercises_by_muscle=exercises_by_muscle,
+        )
 
 
 @app.route("/signup", methods=["GET", "POST"])
