@@ -474,13 +474,13 @@ header .square-btn {
 
 /* Exercise */
 .exercise {
-  margin-bottom: 0.8rem;
+  margin-bottom: 1.4rem;
 }
 
 .exercise .exercise-name {
   height: 6.8rem;
   padding: 0 0.8rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.6rem;
   border-radius: 0.8rem;
   background-color: var(--c-almond);
 }
