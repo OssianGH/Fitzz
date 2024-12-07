@@ -22,3 +22,24 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
+
+
+def exercise_image(name, muscle_group):
+    """Get an exercise image path given its name and muscle group."""
+
+    exercises_path = "/static/images/exercises"
+
+    name = name.lower().replace(" ", "_")
+    muscle_group = muscle_group.lower()
+
+    return f"{exercises_path}/{muscle_group}/{name}.png"
+
+
+def muscle_group_image(name):
+    """Get an muscle group image path given its name."""
+
+    muscle_group_path = "/static/images/exercises/types"
+
+    name = name.lower()
+
+    return f"{muscle_group_path}/{name}.png"
