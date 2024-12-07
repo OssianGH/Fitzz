@@ -1,35 +1,41 @@
-// Wait for DOM content to load
-document.addEventListener('DOMContentLoaded', () => {
-  // Add click event listener to the Add exercise button
-  document.getElementById('add-exercise').addEventListener('click', addExercise);
-});
+async function addExercise(exerciseId, event) {
+  event.preventDefault();
 
-function addExercise() {
-  // Get the exercises container
-  const exercisesContainer = document.getElementById("exercises");
+  // Remove active class to the overlay div
+  document.getElementById('overlay').classList.remove('active');
 
-  // Get the number of exercises in the container
-  const exerciseCount = exercisesContainer.childElementCount + 1;
+  try {
+    const response = await fetch(`/exercise/${exerciseId}`);
 
-  // Create a new exercise element
-  const newExercise = document.createElement("div");
+    if (!response.ok) {
+      throw new Error('Exercise not found');
+    }
 
-  // Assign a unique ID to the new exercise
-  newExercise.id = `exercise-${exerciseCount}`;
+    const exercise = await response.json();
 
-  // Assign the class name to the new exercise
-  newExercise.className = "exercise";
+    // Replace spaces with underscores in the exercise name
+    name_underscore = exercise.name.toLowerCase().replace(/ /g, "_");
 
-  // Set the inner HTML of the new exercise
-  newExercise.innerHTML = `
-  <div class="exercise">
+    // Create a new exercise element
+    const newExercise = document.createElement("div");
+
+    // Assign a unique ID to the new exercise
+    newExercise.id = `exercise-${exercise.id}`;
+
+    // Assign the class name to the new exercise
+    newExercise.className = "exercise";
+
+    // Set the inner HTML of the new exercise
+    newExercise.innerHTML = `
     <div class="exercise-name flex center-align between-justify">
-      <img class="exercise-image" src="/static/images/barbell_bench_press.png">
-      <h3 class="h3 text-center no-margin">Barbell Bench Press</h3>
+      <div class="image-container">
+        <img class="image" src="/static/images/exercises/${exercise.muscle_group.toLowerCase()}/${name_underscore}.png" alt="${exercise.name}">
+      </div>
+      <h3 class="h3 text-center no-margin">${exercise.name}</h3>
       <button id="add-set" class="btn" type="button">Add set</button>
     </div>
     <div id="set-1" class="exercise-set flex gap center-align">
-      <p class="text-center no-margin">1</p>
+      <p class="no-margin">1</p>
       <div class="input-wrapper flex gap center-align evenly-justify">
         <div class="input-group">
           <input class="input" autocomplete="off" name="weight" type="text">
@@ -40,13 +46,19 @@ function addExercise() {
           <label class="input-label">Reps</label>
         </div>
       </div>
-    </div>
-  </div>
-  `;
+    </div>`;
 
-  // newExercise.querySelector("#add-set").addEventListener("click", addSet);
+    // newExercise.querySelector("#add-set").addEventListener("click", addSet);
 
-  // Append the new exercise to the exercises container
-  exercisesContainer.appendChild(newExercise);
-  window.bindInputListeners();
+    const exercisesContainer = document.getElementById("exercises");
+
+    // Append the new exercise to the exercises container
+    exercisesContainer.appendChild(newExercise);
+    window.bindInputListeners();
+
+
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to add exercise.');
+  }
 }

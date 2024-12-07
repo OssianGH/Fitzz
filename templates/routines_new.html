@@ -1,92 +1,61 @@
 {% extends "base.html" %}
 
+{% block scripts %}
+<script src="/static/js/collapse.js"></script>
+<script src="/static/js/input.js"></script>
+<script src="/static/js/overlay.js"></script>
+<script src="/static/js/addExercise.js"></script>
+{% endblock %}
+
 {% block title %}
 New routine
 {% endblock %}
 
 {% block main %}
-<div class="container separate title-region flex center-justify center-align">
-  <h1 class="h1 no-margin">New routine</h1>
+<div class="container title-region flex center-justify center-align">
+  <h1 class="h1 text-center no-margin">New routine</h1>
 </div>
-
 <div class="container">
-  <form action="/" method="post">
-    <div class="routine-editor">
-      <div>
-        <input class="special-input" autocomplete="off" name="routine-name" type="text" placeholder="Routine name">
-      </div>
-      <div class="line"></div>
-      <div id="exercise-1" class="exercise">
-        <div class="exercise-name flex center-align between-justify">
-          <img class="exercise-image" src="/static/images/barbell_bench_press.png">
-          <h3 class="h3 no-margin">Barbell Bench Press</h3>
-          <button id="add-set" class="btn" type="button">Add set</button>
-        </div>
-        <div class="exercise-set flex gap center-align">
-          <p class="text-center no-margin">1</p>
-          <div class="input-wrapper flex gap center-align evenly-justify">
-            <div class="input-group">
-              <input class="input" autocomplete="off" name="routine-name" type="text">
-              <label for="name" class="input-label">Weight</label>
-            </div>
-            <div class="input-group">
-              <input class="input" autocomplete="off" name="routine-name" type="text">
-              <label for="name" class="input-label">Reps</label>
-            </div>
-          </div>
-        </div>
-        <div class="exercise-set flex gap center-align">
-          <p class="text-center no-margin">2</p>
-          <div class="input-wrapper input-wrapper flex gap center-align evenly-justify">
-            <div class="input-group">
-              <input class="input" autocomplete="off" name="routine-name" type="text">
-              <label for="name" class="input-label">Weight</label>
-            </div>
-            <div class="input-group">
-              <input class="input" autocomplete="off" name="routine-name" type="text">
-              <label for="name" class="input-label">Reps</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="exercise">
-        <div class="exercise-name flex center-align between-justify">
-          <img class="exercise-image" src="/static/images/barbell_bench_press.png">
-          <h3 class="h3 no-margin">Barbell Bench Press</h3>
-          <button class="btn">Add set</button>
-        </div>
-        <div class="exercise-set flex gap center-align">
-          <p class="text-center no-margin">1</p>
-          <div class="input-wrapper flex gap center-align evenly-justify">
-            <div class="input-group">
-              <input class="input" autocomplete="off" name="routine-name" type="text">
-              <label for="name" class="input-label">Weight</label>
-            </div>
-            <div class="input-group">
-              <input class="input" autocomplete="off" name="routine-name" type="text">
-              <label for="name" class="input-label">Reps</label>
-            </div>
-          </div>
-        </div>
-        <div class="exercise-set flex gap center-align">
-          <p class="text-center no-margin">2</p>
-          <div class="input-wrapper input-wrapper flex gap center-align evenly-justify">
-            <div class="input-group">
-              <input class="input" autocomplete="off" name="routine-name" type="text">
-              <label for="name" class="input-label">Weight</label>
-            </div>
-            <div class="input-group">
-              <input class="input" autocomplete="off" name="routine-name" type="text">
-              <label for="name" class="input-label">Reps</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="flex gap center-justify">
-        <button class="btn">Add exercise</button>
-        <button class="btn" type="submit">Save routine</button>
-      </div>
+  <form action="/routines/new" method="post">
+    <input class="special-input" autocomplete="off" name="routine-name" type="text" placeholder="Routine name">
+    <div class="line"></div>
+    <div id="exercises"></div>
+    <div class="flex gap center-justify">
+      <button id="add-exercise" class="btn" type="button">Add exercise</button>
+      <button class="btn" type="submit">Save routine</button>
     </div>
+    <div class="container separate"></div>
   </form>
+</div>
+<div id="overlay" class="overlay">
+  <div id="overlay-content" class="overlay-content">
+    <button id="hide-overlay" class="square-btn"><i class="fa fa-x"></i></button>
+    <div class="title-region flex center-justify center-align">
+      <h2 class="h2 text-center">Add exercise</h2>
+    </div>
+    {% for muscle_group, exercises in exercises_by_muscle.items() %}
+    <div class="muscle flex gap center-align">
+      <div class="image-container">
+        <img class="image" src="{{ muscle_group | muscle_group_image }}">
+      </div>
+      <h3 class="h3 no-margin">{{ muscle_group }}</h3>
+    </div>
+    <div class="exercises grid">
+      {% for exercise in exercises %}
+      <div class="card">
+        <a href="#" onclick="addExercise({{ exercise.id }}, event)" class="flex column center-align between-justify">
+          <div class="image-container">
+            <img class="image" src="{{ exercise.name | exercise_image(muscle_group) }}" alt="{{ exercise.name }}">
+          </div>
+          <div class="info">
+            <p class="info-name no-margin">{{ exercise.name }}</p>
+            <p class="info-muscle no-margin">{{ muscle_group }}</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

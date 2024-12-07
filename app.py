@@ -2,7 +2,7 @@ import os
 
 from cs50 import SQL
 from collections import defaultdict
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, jsonify, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -39,10 +39,39 @@ def index():
     """Show welcome page"""
 
     # Query database for username
-    rows = db.execute("SELECT username FROM user WHERE id = ?", session["user_id"])
+    user = db.execute("SELECT username FROM user WHERE id = ?", session["user_id"])[0]
 
     # Display welcome page
-    return render_template("index.html", username=rows[0]["username"])
+    return render_template("index.html", username=user["username"])
+
+
+@app.route("/exercise/<int:exercise_id>")
+def get_exercise(exercise_id):
+    # Query database for exercise with the id
+    exercise = db.execute(
+        """
+            SELECT 
+                exercise.id AS id,
+                exercise.name AS name, 
+                muscle_group.name AS muscle_group 
+            FROM exercise 
+            JOIN muscle_group 
+            ON exercise.muscle_group_id = muscle_group.id 
+            WHERE exercise.id = ?
+        """,
+        exercise_id,
+    )[0]
+
+    if exercise:
+        return jsonify(
+            {
+                "id": exercise["id"],
+                "name": exercise["name"],
+                "muscle_group": exercise["muscle_group"],
+            }
+        )
+    else:
+        return jsonify({"error": "Exercise not found"}), 404
 
 
 @app.route("/login", methods=["GET", "POST"])
