@@ -133,24 +133,20 @@ header .square-btn {
 
 /* COLLAPSE */
 .collapse {
-  display: none;
-}
-
-.collapse.active {
-  display: block;
-}
-
-.collapse>ul {
   width: 100%;
   position: absolute;
-  display: none;
-  top: 3.4rem;
+  visibility: hidden;
+  opacity: 0;
+  top: 0;
   left: 0;
+  transition: top 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
   background-color: var(--c-brown);
 }
 
-.collapse.active>ul {
-  display: block;
+.collapse.active {
+  opacity: 1;
+  top: 3.4rem;
+  visibility: visible;
 }
 
 .collapse>ul>li {
@@ -676,17 +672,19 @@ header .square-btn {
     display: none;
   }
 
-  .collapse {
-    display: block;
+  .collapse,
+  .collapse.active {
+    width: auto;
+    position: static;
+    visibility: visible;
+    opacity: 1;
+    background-color: transparent;
   }
 
   .collapse>ul,
   .collapse.active>ul {
-    width: auto;
-    position: static;
     display: flex;
     gap: 1.8rem;
-    background-color: transparent;
   }
 
   .collapse>ul>li:hover {
