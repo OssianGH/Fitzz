@@ -286,6 +286,11 @@ header .square-btn {
   height: 11rem;
 }
 
+.container.title-region {
+  margin-top: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+
 
 /* FLEX */
 .flex {
@@ -356,7 +361,7 @@ header .square-btn {
   background: linear-gradient(to right, #ece0d3, #d2c6ba);
 }
 
-.card .image {
+.image-container .image {
   width: 94%;
 }
 
@@ -370,13 +375,13 @@ header .square-btn {
   padding: 0.8rem;
 }
 
-.card .info .name {
+.card .info .info-name {
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--c-dark-blue);
 }
 
-.card .info .muscle {
+.card .info .info-muscle {
   font-size: 0.8rem;
   font-weight: 400;
   color: var(--c-paragraph);
@@ -547,7 +552,7 @@ header .square-btn {
   height: 97%;
   width: 97%;
   overflow-y: scroll;
-  padding: 1rem;
+  padding: 0 1rem;
   border-radius: 0.6rem;
   opacity: 0;
   transform: scale(0.9);
@@ -555,6 +560,10 @@ header .square-btn {
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
   background-color: var(--c-brown);
+}
+
+.overlay-content .exercises {
+  margin-bottom: 2.6rem;
 }
 
 .overlay-content .square-btn {
@@ -565,16 +574,35 @@ header .square-btn {
 }
 
 .overlay-content .h2 {
-  margin-bottom: 1rem;
-  color: var(--c-white);
-}
-
-.overlay-content .h3 {
   color: var(--c-white);
 }
 
 .overlay-content .line {
+  margin-bottom: 1.2rem;
   border-color: var(--c-white);
+}
+
+.overlay-content .title-region {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.overlay-content .muscle {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
+  background-color: var(--c-almond);
+}
+
+.overlay-content .muscle .image-container {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: 0.2rem 0.5rem 1.25rem rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to right, #ece0d3, #d2c6ba);
 }
 
 
@@ -620,12 +648,17 @@ header .square-btn {
     padding: 1.6rem;
   }
 
-  .card .info .name {
+  .card .info .info-name {
     font-size: 1rem;
   }
 
-  .card .info .muscle {
+  .card .info .info-muscle {
     font-size: 0.9rem;
+  }
+
+  .overlay-content .muscle .image-container {
+    width: 5.5rem;
+    height: 5.5rem;
   }
 }
 
