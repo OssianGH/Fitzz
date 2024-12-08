@@ -4,6 +4,7 @@ function checkAlreadyAdded(exerciseId) {
 
   // Loop through each exercise in the container
   for (let index = 0; index < exercisesContainer.children.length; index++) {
+    // Get the current exercise
     const exercise = exercisesContainer.children[index];
 
     // Determine the exercise number
@@ -120,7 +121,7 @@ function displayMoveButtons() {
 
   // Loop through each exercise in the container
   Array.from(exercisesContainer.children).forEach((exercise, index) => {
-    // Set the exercise number
+    // Determine the exercise number
     const exerciseNumber = index + 1;
 
     // Compose the exercise string

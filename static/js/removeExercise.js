@@ -26,7 +26,7 @@ function reindexExercises() {
     // Get the old exercise string
     const oldExerciseNumberString = exercise.getAttribute('id');
 
-    // Set the new exercise number
+    // Determine the new exercise number
     const newExerciseNumber = index + 1;
 
     // Compose the new exercise string

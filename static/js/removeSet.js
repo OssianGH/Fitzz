@@ -34,7 +34,7 @@ function reindexSets(exerciseNumber) {
 
   // Loop through each set in the container
   Array.from(setsContainer.children).forEach((set, index) => {
-    // Set the new set number
+    // Determine the new set number
     const newSetNumber = index + 1;
 
     // Update the ID of the set
