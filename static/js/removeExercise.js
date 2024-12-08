@@ -12,6 +12,9 @@ function removeExercise(exerciseNumber) {
 
   // Re-index exercises
   reindexExercises();
+
+  // Display the move buttons
+  displayMoveButtons();
 }
 
 function reindexExercises() {
@@ -44,6 +47,16 @@ function reindexExercises() {
     const removeExerciseButton = exercise.querySelector(`#${oldExerciseNumberString}-remove`);
     removeExerciseButton.setAttribute('id', `${newExerciseNumberString}-remove`);
     removeExerciseButton.setAttribute('onclick', `removeExercise('${newExerciseNumber}')`);
+
+    // Update the Move up button
+    const moveUpButton = exercise.querySelector(`#${oldExerciseNumberString}-move-up`);
+    moveUpButton.setAttribute('id', `${newExerciseNumberString}-move-up`);
+    moveUpButton.setAttribute('onclick', `moveExerciseUp('${newExerciseNumber}')`);
+
+    // Update the Move down button
+    const moveDownButton = exercise.querySelector(`#${oldExerciseNumberString}-move-down`);
+    moveDownButton.setAttribute('id', `${newExerciseNumberString}-move-down`);
+    moveDownButton.setAttribute('onclick', `moveExerciseDown('${newExerciseNumber}')`);
 
     // Update the sets container
     exercise.querySelector(`#${oldExerciseNumberString}-sets`).setAttribute('id', `${newExerciseNumberString}-sets`);;

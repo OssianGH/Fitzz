@@ -74,40 +74,37 @@ async function addExercise(exerciseId, event) {
     newExercise.innerHTML = `
     <input type="hidden" name="${exerciseNumberString}-id" value="${exercise.id}">
     <div class="exercise-name flex gap center-align between-justify">
-      <div class="image-container">
-        <img class="image" src="/static/images/exercises/${exercise.muscle_group.toLowerCase()}/${nameUnderscore}.png" alt="${exercise.name}">
+      <div class="flex gap center-align">
+        <div class="image-container">
+          <img class="image" src="/static/images/exercises/${exercise.muscle_group.toLowerCase()}/${nameUnderscore}.png" alt="${exercise.name}">
+        </div>
+        <h3 class="h3 text-center no-margin">${exercise.name}</h3>
       </div>
-      <h3 class="h3 text-center no-margin">${exercise.name}</h3>
-      <div class="button-wrapper flex between-justify">
+      <div class="button-wrapper flex">
         <button id=${exerciseNumberString}-add-set class="square-btn" type="button" onclick="addSet(${exerciseNumber})">
           <i class="fa fa-plus"></i>
         </button>
         <button id=${exerciseNumberString}-remove class="square-btn" type="button" onclick="removeExercise(${exerciseNumber})">
           <i class="fa fa-trash"></i>
         </button>
-      </div>
-    </div>
-    <div id="${exerciseNumberString}-sets">
-      <div id="${exerciseNumberString}-set-1" class="exercise-set flex gap center-align">
-        <p class="no-margin">1</p>
-        <div class="input-wrapper flex gap center-align evenly-justify">
-          <div class="input-group">
-            <input class="input" autocomplete="off" name="${exerciseNumberString}-set-1-weight" type="text">
-            <label class="input-label">Weight</label>
-          </div>
-          <div class="input-group">
-            <input class="input" autocomplete="off" name="${exerciseNumberString}-set-1-reps" type="text">
-            <label class="input-label">Reps</label>
-          </div>
-        </div>
-        <button class="square-btn" type="button" onclick="removeSet(${exerciseNumber}, 1)">
-          <i class="fa fa-trash"></i>
+        <button id=${exerciseNumberString}-move-up class="square-btn" type="button" onclick="moveExerciseUp(${exerciseNumber})">
+          <i class="fa fa-arrow-up"></i>
+        </button>
+        <button id=${exerciseNumberString}-move-down class="square-btn" type="button" onclick="moveExerciseDown(${exerciseNumber})">
+          <i class="fa fa-arrow-down"></i>
         </button>
       </div>
-    </div>`;
+    </div>
+    <div id="${exerciseNumberString}-sets"></div>`;
 
     // Append the new exercise to the exercises container
     exercisesContainer.appendChild(newExercise);
+
+    // Add the first set
+    addSet(exerciseNumber);
+
+    // Display the move buttons
+    displayMoveButtons();
 
     // Bind the animation for the new inputs to display animation 
     window.bindInputListeners();
@@ -115,4 +112,40 @@ async function addExercise(exerciseId, event) {
     console.error('Error:', error);
     alert('Failed to add exercise.');
   }
+}
+
+function displayMoveButtons() {
+  // Get the exercises container
+  const exercisesContainer = document.getElementById('exercises');
+
+  // Loop through each exercise in the container
+  Array.from(exercisesContainer.children).forEach((exercise, index) => {
+    // Set the exercise number
+    const exerciseNumber = index + 1;
+
+    // Compose the exercise string
+    const exerciseNumberString = `exercise-${exerciseNumber}`;
+
+    // Get the Move up button
+    const moveUpButton = exercise.querySelector(`#${exerciseNumberString}-move-up`);
+
+    // Check if the exercise is the first one
+    if (exerciseNumber === 1) {
+      moveUpButton.style.display = 'none';
+    }
+    else {
+      moveUpButton.style.display = 'inline-block';
+    }
+
+    // Get the Move down button
+    const moveDownButton = exercise.querySelector(`#${exerciseNumberString}-move-down`);
+
+    // Check if the exercise is the last one
+    if (exerciseNumber === exercisesContainer.childElementCount) {
+      moveDownButton.style.display = 'none';
+    }
+    else {
+      moveDownButton.style.display = 'inline-block';
+    }
+  });
 }

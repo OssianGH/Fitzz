@@ -514,7 +514,7 @@ header .square-btn {
 }
 
 .exercise .exercise-name .button-wrapper {
-  width: 5rem;
+  gap: 0.6rem;
 }
 
 .exercise .exercise-name .h3 {
