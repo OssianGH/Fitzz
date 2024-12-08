@@ -18,7 +18,7 @@ function removeExercise(exerciseNumber) {
 }
 
 function reindexExercises() {
-  // Compose the exercise string
+  // Get the exercises container
   const exercisesContainer = document.getElementById('exercises');
 
   // Loop through each exercise in the container
