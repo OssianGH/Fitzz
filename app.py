@@ -145,30 +145,96 @@ def routines():
 def routines_new():
     """Create a new routine"""
 
-    # Query database for muscle groups
-    muscle_groups = db.execute("SELECT * FROM muscle_group")
-
-    # Create a dictionary to store exercises by muscle groups
-    exercises_by_muscle = defaultdict(list)
-
-    # Loop through muscle groups
-    for muscle_group in muscle_groups:
-        # Query database for exercises of the current muscle group
-        exercises = db.execute(
-            "SELECT id, name FROM exercise WHERE muscle_group_id = ?",
-            muscle_group["id"],
-        )
-
-        # Add exercises to the dictionary
-        exercises_by_muscle[muscle_group["name"]].extend(exercises)
-
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
+        routine_name = request.form.get("routine-name")  # Routine name
+        exercises_data = {}  # Dictionary to store exercises and sets by ID
+
+        # Process exercises
+        exercise_count = 1
+        while True:
+            # Get the exercise ID from the hidden input
+            exercise_id = request.form.get(f"exercise-{exercise_count}-id")
+            if not exercise_id:
+                break  # No more exercises
+
+            exercise_sets = []
+            set_count = 1
+            while True:
+                # Get set data for this exercise
+                weight = request.form.get(
+                    f"exercise-{exercise_count}-set-{set_count}-weight"
+                )
+                reps = request.form.get(
+                    f"exercise-{exercise_count}-set-{set_count}-reps"
+                )
+                if not weight and not reps:
+                    break  # No more sets for this exercise
+
+                exercise_sets.append({"weight": weight, "reps": reps})
+                set_count += 1
+
+            # Store the sets under the exercise ID
+            exercises_data[exercise_id] = exercise_sets
+            exercise_count += 1
+
+        # Processed data
+        print("Routine Name:", routine_name)
+        print("Exercises Data:", exercises_data)
+
+        # Create databse entries
+        routine_id = db.execute(
+            "INSERT INTO routine (user_id, name) VALUES(?, ?)",
+            session["user_id"],
+            routine_name,
+        )
+
+        for position, (exercise_id, sets) in enumerate(exercises_data.items(), start=1):
+            routine_exercise_id = db.execute(
+                "INSERT INTO routine_exercise (routine_id, exercise_id, position, rest_time) VALUES (?, ?, ?, ?)",
+                routine_id,
+                exercise_id,
+                position,
+                0,
+            )
+            for set_number, routine_set in enumerate(sets, start=1):
+                db.execute(
+                    "INSERT INTO routine_set (routine_exercise_id, set_number, weight, repetitions) VALUES (?, ?, ?, ?)",
+                    routine_exercise_id,
+                    set_number,
+                    routine_set["weight"],
+                    routine_set["reps"],
+                )
+
         # Redirect user to routines page
         return redirect("/routines")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
+        # Query database for muscle groups
+        muscle_groups = db.execute("SELECT * FROM muscle_group")
+
+        # Query database for exercises
+        exercises = db.execute("SELECT id, name, muscle_group_id FROM exercise")
+
+        # Map muscle_group IDs to their names
+        muscle_group_map = {
+            muscle_group["id"]: muscle_group["name"] for muscle_group in muscle_groups
+        }
+
+        # Create a dictionary to store exercises by muscle group
+        exercises_by_muscle = defaultdict(list)
+
+        # Loop through exercises
+        for exercise in exercises:
+            # Get the muscle group name
+            muscle_group_name = muscle_group_map[exercise["muscle_group_id"]]
+
+            # Add exercise to the dictionary
+            exercises_by_muscle[muscle_group_name].append(
+                {"id": exercise["id"], "name": exercise["name"]}
+            )
+
         # Display new routine page
         return render_template(
             "routines_new.html",
