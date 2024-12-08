@@ -1,5 +1,5 @@
 function addSet(exerciseNumber) {
-  // Set the exercise string
+  // Compose the exercise string
   const exerciseNumberString = `exercise-${exerciseNumber}`;
 
   // Get the sets container
@@ -30,7 +30,9 @@ function addSet(exerciseNumber) {
       <label class="input-label">Reps</label>
     </div>
   </div>
-  <button class="square-btn" type="button" onclick="removeSet(${exerciseNumber}, ${setNumber})"><i class="fa fa-x"></i></button>`;
+  <button class="square-btn" type="button" onclick="removeSet(${exerciseNumber}, ${setNumber})">
+    <i class="fa fa-trash"></i>
+  </button>`;
 
   // Append new set to the sets container
   setsContainer.appendChild(newSet);

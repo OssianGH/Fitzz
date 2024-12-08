@@ -18,19 +18,19 @@ async function addExercise(exerciseId, event) {
     const exercise = await response.json();
 
     // Get the exercises container
-    const exercisesContainer = document.getElementById("exercises");
+    const exercisesContainer = document.getElementById('exercises');
 
     // Get the number of exercises in the container
     const exerciseNumber = exercisesContainer.childElementCount + 1;
 
-    // Set the exercise string
+    // Compose the exercise string
     const exerciseNumberString = `exercise-${exerciseNumber}`;
 
     // Replace spaces with underscores in the exercise name
-    const nameUnderscore = exercise.name.toLowerCase().replace(/ /g, "_");
+    const nameUnderscore = exercise.name.toLowerCase().replace(/ /g, '_');
 
     // Create the new exercise div
-    const newExercise = document.createElement("div");
+    const newExercise = document.createElement('div');
 
     // Assign a unique ID to the new exercise
     newExercise.setAttribute('id', exerciseNumberString);
@@ -46,7 +46,14 @@ async function addExercise(exerciseId, event) {
         <img class="image" src="/static/images/exercises/${exercise.muscle_group.toLowerCase()}/${nameUnderscore}.png" alt="${exercise.name}">
       </div>
       <h3 class="h3 text-center no-margin">${exercise.name}</h3>
-      <button class="btn" type="button" onclick="addSet(${exerciseNumber})">Add set</button>
+      <div class="button-wrapper flex between-justify">
+        <button id=${exerciseNumberString}-add-set class="square-btn" type="button" onclick="addSet(${exerciseNumber})">
+          <i class="fa fa-plus"></i>
+        </button>
+        <button id=${exerciseNumberString}-remove class="square-btn" type="button" onclick="removeExercise(${exerciseNumber})">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
     </div>
     <div id="${exerciseNumberString}-sets">
       <div id="${exerciseNumberString}-set-1" class="exercise-set flex gap center-align">
@@ -61,7 +68,9 @@ async function addExercise(exerciseId, event) {
             <label class="input-label">Reps</label>
           </div>
         </div>
-        <button class="square-btn" type="button" onclick="removeSet(${exerciseNumber}, 1)"><i class="fa fa-x"></i></button>
+        <button class="square-btn" type="button" onclick="removeSet(${exerciseNumber}, 1)">
+          <i class="fa fa-trash"></i>
+        </button>
       </div>
     </div>`;
 
