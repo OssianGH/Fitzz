@@ -37,6 +37,36 @@ function addSet(exerciseNumber) {
   // Append new set to the sets container
   setsContainer.appendChild(newSet);
 
+  // Display the first remove set button
+  displayFirstRemoveSetButton(exerciseNumber);
+
   // Bind the animation for the new inputs to display animation 
   window.bindInputListeners();
+}
+
+function displayFirstRemoveSetButton(exerciseNumber) {
+  // Compose the exercise string
+  const exerciseNumberString = `exercise-${exerciseNumber}`;
+
+  // Get the sets container
+  const setsContainer = document.getElementById(`${exerciseNumberString}-sets`);
+
+  // Get the number of child elements within the container
+  const setsNumber = setsContainer.childElementCount
+
+  // Check if there is no set in the container
+  if (setsNumber === 0) {
+    return
+  }
+
+  // Get the first set in the container
+  const firstSet = setsContainer.children[0];
+
+  // Check if there is more than one set in the container
+  if (setsNumber > 1) {
+    firstSet.querySelector('.square-btn').style.visibility = 'visible';
+  }
+  else {
+    firstSet.querySelector('.square-btn').style.visibility = 'hidden';
+  }
 }

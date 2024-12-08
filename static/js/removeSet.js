@@ -2,6 +2,14 @@ function removeSet(exerciseNumber, setNumber) {
   // Compose the exercise string
   const exerciseNumberString = `exercise-${exerciseNumber}`;
 
+  // Get the sets container
+  const setsContainer = document.getElementById(`${exerciseNumberString}-sets`);
+
+  // Check if there is only one set in the container
+  if (setsContainer.childElementCount === 1) {
+    return;
+  }
+
   // Get the set to remove
   const set = document.getElementById(`${exerciseNumberString}-set-${setNumber}`);
 
@@ -12,6 +20,9 @@ function removeSet(exerciseNumber, setNumber) {
 
   // Re-index sets
   reindexSets(exerciseNumber);
+
+  // Display the first remove set button
+  displayFirstRemoveSetButton(exerciseNumber);
 }
 
 function reindexSets(exerciseNumber) {
