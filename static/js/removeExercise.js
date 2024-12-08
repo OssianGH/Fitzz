@@ -1,9 +1,9 @@
-function removeExercise(exerciseCount) {
+function removeExercise(exerciseNumber) {
   // Set the exercise string
-  const currentExercise = `exercise-${exerciseCount}`;
+  const exerciseNumberString = `exercise-${exerciseNumber}`;
 
   // Get the exercise to remove
-  const exercise = document.getElementById(currentExercise);
+  const exercise = document.getElementById(exerciseNumberString);
 
   // Check if the exercise exists
   if (exercise) {

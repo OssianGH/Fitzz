@@ -1,32 +1,40 @@
-// Wait for DOM content to load
-document.addEventListener('DOMContentLoaded', () => {
-  // Add click event listener to the Add set button
-  document.getElementById('add-set').addEventListener('click', addSet);
-});
+function addSet(exerciseNumber) {
+  // Set the exercise string
+  const exerciseNumberString = `exercise-${exerciseNumber}`;
 
-const addSet = () => {
-  // Create the set div
+  // Get the sets container
+  const setsContainer = document.getElementById(`${exerciseNumberString}-sets`);
 
-  let setNumber = document.getElementById('exercise-1').childElementCount
+  // Get the number of sets in the container
+  const setNumber = setsContainer.childElementCount + 1;
 
-  const div = document.createElement('div')
-  div.classList.add('exercise-set')
-  div.classList.add('flex')
-  div.classList.add('gap')
-  div.classList.add('center-align')
-  div.innerHTML = `
-  <p class="text-center no-margin">${setNumber}</p>
+  // Create the new set div
+  const newSet = document.createElement('div');
+
+  // Assign a unique ID to the new set
+  newSet.setAttribute('id', `${exerciseNumberString}-set-${setNumber}`);
+
+  // Assign the class name to the new set
+  newSet.setAttribute('class', 'exercise-set flex gap center-align')
+
+  // Set the inner HTML of the new set
+  newSet.innerHTML = `
+  <p class="no-margin">${setNumber}</p>
   <div class="input-wrapper flex gap center-align evenly-justify">
-  <div class="input-group">
-  <input class="input" autocomplete="off" name="routine-name" type="text">
-  <label for="name" class="input-label">Weight</label>
+    <div class="input-group">
+      <input class="input" autocomplete="off" name="${exerciseNumberString}-set-${setNumber}-weight" type="text">
+      <label class="input-label">Weight</label>
+    </div>
+    <div class="input-group">
+      <input class="input" autocomplete="off" name="${exerciseNumberString}-set-${setNumber}-reps" type="text">
+      <label class="input-label">Reps</label>
+    </div>
   </div>
-  <div class="input-group">
-  <input class="input" autocomplete="off" name="routine-name" type="text">
-  <label for="name" class="input-label">Reps</label>
-  </div>
-  </div>`
+  <button class="square-btn" type="button" onclick="removeSet(${exerciseNumber}, ${setNumber})"><i class="fa fa-x"></i></button>`;
 
-  // Append the set div to the exercise-1 div
-  document.getElementById('exercise-1').appendChild(div)
+  // Append new set to the sets container
+  setsContainer.appendChild(newSet);
+
+  // Bind the animation for the new inputs to display animation 
+  window.bindInputListeners();
 }

@@ -33,10 +33,10 @@ async function addExercise(exerciseId, event) {
     const newExercise = document.createElement("div");
 
     // Assign a unique ID to the new exercise
-    newExercise.setAttribute('id', exerciseNumberString)
+    newExercise.setAttribute('id', exerciseNumberString);
 
     // Assign the class to the new exercise
-    newExercise.setAttribute('class', 'exercise')
+    newExercise.setAttribute('class', 'exercise');
 
     // Set the inner HTML of the new exercise
     newExercise.innerHTML = `
