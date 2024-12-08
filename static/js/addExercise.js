@@ -1,6 +1,38 @@
+function checkAlreadyAdded(exerciseId) {
+  // Get the exercises container
+  const exercisesContainer = document.getElementById('exercises');
+
+  // Loop through each exercise in the container
+  for (let index = 0; index < exercisesContainer.children.length; index++) {
+    const exercise = exercisesContainer.children[index];
+
+    // Determine the exercise number
+    const exerciseNumber = index + 1;
+
+    // Compose the exercise string
+    const exerciseNumberString = `exercise-${exerciseNumber}`;
+
+    // Get the input with the exercise ID
+    const input = exercise.querySelector(`input[name="${exerciseNumberString}-id"]`);
+
+    // Check if the input exists and the value matches the exercise ID
+    if (input && input.value === `${exerciseId}`) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 async function addExercise(exerciseId, event) {
   // Prevent the default anchor tag behavior
   event.preventDefault();
+
+  // Check if the exercise is already added
+  if (checkAlreadyAdded(exerciseId)) {
+    alert('Exercise already added.');
+    return;
+  }
 
   // Hide overlay
   document.getElementById('overlay').classList.remove('active');

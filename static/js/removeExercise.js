@@ -32,7 +32,7 @@ function reindexExercises() {
     // Update ID of the exercise
     exercise.setAttribute('id', newExerciseNumberString);
 
-    // Update the input for exercise ID
+    // Update the input with the exercise ID
     exercise.querySelector(`input[name="${oldExerciseNumberString}-id"]`).setAttribute('name', `${newExerciseNumberString}-id`)
 
     // Update the Add set button
