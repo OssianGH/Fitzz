@@ -22,11 +22,11 @@ function addSet(exerciseNumber) {
   <p class="no-margin">${setNumber}</p>
   <div class="input-wrapper flex gap center-align evenly-justify">
     <div class="input-group">
-      <input class="input" autocomplete="off" name="${exerciseNumberString}-set-${setNumber}-weight" type="text">
+      <input class="input" autocomplete="off" name="${exerciseNumberString}-set-${setNumber}-weight" type="number" min="1">
       <label class="input-label">Weight</label>
     </div>
     <div class="input-group">
-      <input class="input" autocomplete="off" name="${exerciseNumberString}-set-${setNumber}-reps" type="text">
+      <input class="input" autocomplete="off" name="${exerciseNumberString}-set-${setNumber}-reps" type="number" min="1">
       <label class="input-label">Reps</label>
     </div>
   </div>

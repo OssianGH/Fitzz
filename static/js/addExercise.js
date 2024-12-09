@@ -163,14 +163,8 @@ function addRestTimeOptions(exerciseContainer, exerciseNumberString) {
   // Get the select element for the rest time
   const select = exerciseContainer.querySelector(`select[name="${exerciseNumberString}-rest"]`);
 
-  // Create the Off option
-  const offOption = document.createElement("option");
-  offOption.value = 0;
-  offOption.text = "Off";
-  select.appendChild(offOption);
-
   // Create the rest time options from 5 to 300 seconds
-  for (let i = 5; i <= 300; i += 5) {
+  for (let i = 0; i <= 300; i += 5) {
     const newOption = document.createElement("option");
     newOption.value = `${i}`;
     newOption.text = formatSeconds(i);
