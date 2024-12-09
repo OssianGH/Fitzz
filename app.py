@@ -147,36 +147,99 @@ def routines_new():
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        routine_name = request.form.get("routine-name")  # Routine name
-        exercises_data = {}  # Dictionary to store exercises and sets by ID
+        print(request.form)
 
-        # Process exercises
-        exercise_count = 1
+        # Access routine name
+        routine_name = request.form.get("routine-name")
+
+        # Ensure routine name was submitted
+        if not routine_name:
+            return display_error("Missing routine name.")
+
+        # Dictionary to store exercises and sets
+        exercises_data = {}
+
+        # Initialize the exercie number
+        exercise_number = 1
+
+        # Loop through each exercise until there are no more
         while True:
-            # Get the exercise ID from the hidden input
-            exercise_id = request.form.get(f"exercise-{exercise_count}-id")
-            if not exercise_id:
-                break  # No more exercises
+            # Access form current exercise id
+            exercise_id = request.form.get(f"exercise-{exercise_number}-id")
 
-            exercise_sets = []
-            set_count = 1
-            while True:
-                # Get set data for this exercise
-                weight = request.form.get(
-                    f"exercise-{exercise_count}-set-{set_count}-weight"
+            # Check if there is not an id for the current exercise
+            if not exercise_id:
+                # Check if the current exercise is the first
+                if exercise_number == 1:
+                    # The routine does not have any exercises
+                    return display_error("The routine must have at least one exercise.")
+                else:
+                    # The routine has no more exercises
+                    break
+
+            # Access form current exercise rest time
+            exercise_rest = request.form.get(f"exercise-{exercise_number}-rest")
+
+            # Ensure current exercise rest time was submitted
+            if not exercise_rest:
+                exercise_rest = 0
+            else:
+                # Ensure current exercise rest time is integer
+                try:
+                    exercise_rest = int(exercise_rest)
+                except:
+                    return display_error(
+                        f"Rest time for exercise {exercise_number} must be integer"
+                    )
+
+            # Ensure current exercise rest time range is valid and is multiple of 5
+            if exercise_rest < 1 or exercise_rest > 300 or exercise_rest % 5 != 0:
+                return display_error(
+                    f"Invalid rest time for exercise {exercise_number}."
                 )
+
+            # List to store sets of the current exercise
+            exercise_sets = []
+
+            # Initialize the set number
+            set_number = 1
+
+            # Loop through each set until there are no more
+            while True:
+                # Access form current set weight
+                weight = request.form.get(
+                    f"exercise-{exercise_number}-set-{set_number}-weight"
+                )
+
+                # Access form current set reps
                 reps = request.form.get(
-                    f"exercise-{exercise_count}-set-{set_count}-reps"
+                    f"exercise-{exercise_number}-set-{set_number}-reps"
                 )
                 if not weight and not reps:
-                    break  # No more sets for this exercise
+                    # Check if the current set is the first
+                    if set_number == 1:
+                        # The current exercise does not have any sets
+                        return display_error(
+                            f"Exercise {exercise_number} must have at least one set."
+                        )
+                    else:
+                        # The current exercise has no more sets
+                        break
 
+                # Add set data to the list
                 exercise_sets.append({"weight": weight, "reps": reps})
-                set_count += 1
+
+                # Go to the next set
+                set_number += 1
 
             # Store the sets under the exercise ID
-            exercises_data[exercise_id] = exercise_sets
-            exercise_count += 1
+            exercises_data[exercise_id] = {
+                "rest_time": exercise_rest,
+                "sets": exercise_sets,
+            }
+
+            # Go to the next exercise
+            exercise_number += 1
 
         # Processed data
         print("Routine Name:", routine_name)
@@ -189,15 +252,17 @@ def routines_new():
             routine_name,
         )
 
-        for position, (exercise_id, sets) in enumerate(exercises_data.items(), start=1):
+        for position, (exercise_id, exercise) in enumerate(
+            exercises_data.items(), start=1
+        ):
             routine_exercise_id = db.execute(
                 "INSERT INTO routine_exercise (routine_id, exercise_id, position, rest_time) VALUES (?, ?, ?, ?)",
                 routine_id,
                 exercise_id,
                 position,
-                0,
+                exercise["rest_time"],
             )
-            for set_number, routine_set in enumerate(sets, start=1):
+            for set_number, routine_set in enumerate(exercise["sets"], start=1):
                 db.execute(
                     "INSERT INTO routine_set (routine_exercise_id, set_number, weight, repetitions) VALUES (?, ?, ?, ?)",
                     routine_exercise_id,
