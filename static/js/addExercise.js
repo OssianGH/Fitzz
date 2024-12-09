@@ -96,7 +96,15 @@ async function addExercise(exerciseId, event) {
         </button>
       </div>
     </div>
+    <div class="select-group">
+      <label class="select-label">Rest time</label>
+      <select class="input" name="${exerciseNumberString}-rest">
+      </select>
+    </div>
     <div id="${exerciseNumberString}-sets"></div>`;
+
+    // Add the rest time options
+    addRestTimeOptions(newExercise, exerciseNumberString);
 
     // Append the new exercise to the exercises container
     exercisesContainer.appendChild(newExercise);
@@ -149,4 +157,39 @@ function displayMoveButtons() {
       moveDownButton.style.display = 'inline-block';
     }
   });
+}
+
+function addRestTimeOptions(exerciseContainer, exerciseNumberString) {
+  // Get the select element for the rest time
+  const select = exerciseContainer.querySelector(`select[name="${exerciseNumberString}-rest"]`);
+
+  // Create the Off option
+  const offOption = document.createElement("option");
+  offOption.value = 0;
+  offOption.text = "Off";
+  select.appendChild(offOption);
+
+  // Create the rest time options from 5 to 300 seconds
+  for (let i = 5; i <= 300; i += 5) {
+    const newOption = document.createElement("option");
+    newOption.value = `${i}`;
+    newOption.text = formatSeconds(i);
+    select.appendChild(newOption);
+  }
+}
+
+function formatSeconds(seconds) {
+  if (seconds < 60) {
+    // Return the seconds if less than a minute
+    return `${seconds} s`;
+  }
+
+  // Calculate the minutes
+  const minutes = Math.floor(seconds / 60);
+
+  // Calculate the remaining seconds
+  const remainingSeconds = seconds % 60;
+
+  // Return the formatted time in minutes and seconds
+  return `${minutes} min ${remainingSeconds} s`;
 }

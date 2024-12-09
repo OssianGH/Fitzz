@@ -38,6 +38,9 @@ function reindexExercises() {
     // Update the input with the exercise ID
     exercise.querySelector(`input[name="${oldExerciseNumberString}-id"]`).setAttribute('name', `${newExerciseNumberString}-id`)
 
+    // Update the input with the exercise rest time
+    exercise.querySelector(`select[name="${oldExerciseNumberString}-rest"]`).setAttribute('name', `${newExerciseNumberString}-rest`)
+
     // Update the Add set button
     const addSetButton = exercise.querySelector(`#${oldExerciseNumberString}-add-set`);
     addSetButton.setAttribute('id', `${newExerciseNumberString}-add-set`);
