@@ -176,7 +176,7 @@ header .square-btn {
 /* INPUT */
 .input-group {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem
 }
 
 .input {
@@ -476,7 +476,7 @@ header .square-btn {
 
 /* Exercise */
 .exercise {
-  margin-bottom: 1.4rem;
+  margin-bottom: 3rem;
 }
 
 .exercise .square-btn {
