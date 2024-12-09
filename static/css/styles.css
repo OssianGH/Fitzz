@@ -216,6 +216,22 @@ header .square-btn {
   color: var(--c-dark-blue);
 }
 
+.select-group {
+  margin-bottom: 0.8rem;
+}
+
+.select-group .input {
+  display: block;
+}
+
+.select-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--c-dark-blue);
+}
+
 
 /* SPECIAL INPUT */
 .special-input {
