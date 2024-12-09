@@ -36,10 +36,12 @@ function reindexExercises() {
     exercise.setAttribute('id', newExerciseNumberString);
 
     // Update the input with the exercise ID
-    exercise.querySelector(`input[name="${oldExerciseNumberString}-id"]`).setAttribute('name', `${newExerciseNumberString}-id`)
+    exercise.querySelector(`input[name="${oldExerciseNumberString}-id"]`)
+      .setAttribute('name', `${newExerciseNumberString}-id`)
 
     // Update the input with the exercise rest time
-    exercise.querySelector(`select[name="${oldExerciseNumberString}-rest"]`).setAttribute('name', `${newExerciseNumberString}-rest`)
+    exercise.querySelector(`select[name="${oldExerciseNumberString}-rest"]`)
+      .setAttribute('name', `${newExerciseNumberString}-rest`)
 
     // Update the Add set button
     const addSetButton = exercise.querySelector(`#${oldExerciseNumberString}-add-set`);
@@ -47,9 +49,11 @@ function reindexExercises() {
     addSetButton.setAttribute('onclick', `addSet('${newExerciseNumber}')`);
 
     // Update the Remove exercise button
-    const removeExerciseButton = exercise.querySelector(`#${oldExerciseNumberString}-remove`);
+    const removeExerciseButton = exercise
+      .querySelector(`#${oldExerciseNumberString}-remove`);
     removeExerciseButton.setAttribute('id', `${newExerciseNumberString}-remove`);
-    removeExerciseButton.setAttribute('onclick', `removeExercise('${newExerciseNumber}')`);
+    removeExerciseButton
+      .setAttribute('onclick', `removeExercise('${newExerciseNumber}')`);
 
     // Update the Move up button
     const moveUpButton = exercise.querySelector(`#${oldExerciseNumberString}-move-up`);
@@ -57,12 +61,14 @@ function reindexExercises() {
     moveUpButton.setAttribute('onclick', `moveExerciseUp('${newExerciseNumber}')`);
 
     // Update the Move down button
-    const moveDownButton = exercise.querySelector(`#${oldExerciseNumberString}-move-down`);
+    const moveDownButton = exercise
+      .querySelector(`#${oldExerciseNumberString}-move-down`);
     moveDownButton.setAttribute('id', `${newExerciseNumberString}-move-down`);
     moveDownButton.setAttribute('onclick', `moveExerciseDown('${newExerciseNumber}')`);
 
     // Update the sets container
-    exercise.querySelector(`#${oldExerciseNumberString}-sets`).setAttribute('id', `${newExerciseNumberString}-sets`);;
+    exercise.querySelector(`#${oldExerciseNumberString}-sets`)
+      .setAttribute('id', `${newExerciseNumberString}-sets`);;
 
     // Re-index sets within the exercise
     reindexSets(newExerciseNumber);

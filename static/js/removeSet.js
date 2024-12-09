@@ -47,7 +47,8 @@ function reindexSets(exerciseNumber) {
     set.querySelectorAll('input').forEach(input => {
       if (input.getAttribute('name').includes('-weight')) {
         // Update the weight input
-        input.setAttribute('name', `${exerciseNumberString}-set-${newSetNumber}-weight`);
+        input
+          .setAttribute('name', `${exerciseNumberString}-set-${newSetNumber}-weight`);
       } else if (input.getAttribute('name').includes('-reps')) {
         // Update the reps input
         input.setAttribute('name', `${exerciseNumberString}-set-${newSetNumber}-reps`)
@@ -55,6 +56,7 @@ function reindexSets(exerciseNumber) {
     });
 
     // Update the Remove set button
-    set.querySelector('.square-btn').setAttribute('onclick', `removeSet(${exerciseNumber}, ${newSetNumber})`);
+    set.querySelector('.square-btn')
+      .setAttribute('onclick', `removeSet(${exerciseNumber}, ${newSetNumber})`);
   });
 }
