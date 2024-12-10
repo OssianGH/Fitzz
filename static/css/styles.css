@@ -391,13 +391,13 @@ header .square-btn {
 }
 
 .card .info .info-name {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--c-dark-blue);
 }
 
 .card .info .info-muscle {
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 400;
   color: var(--c-paragraph);
 }
@@ -683,14 +683,6 @@ header .square-btn {
 
   .card .info {
     padding: 1.6rem;
-  }
-
-  .card .info .info-name {
-    font-size: 1rem;
-  }
-
-  .card .info .info-muscle {
-    font-size: 0.9rem;
   }
 
   .overlay-content .muscle .image-container {
