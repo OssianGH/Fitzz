@@ -110,6 +110,11 @@ async function addExercise(exerciseId, event) {
     // Append the new exercise to the exercises container
     exercisesContainer.appendChild(newExercise);
 
+    // Ingrease the exercise count
+    let exerciseCountInput = document.getElementById('exercise-count')
+    let exerciseCount = exerciseCountInput.value
+    exerciseCountInput.value = parseInt(exerciseCount) + 1
+
     // Add the first set
     addSet(exerciseNumber);
 
