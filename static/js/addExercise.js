@@ -29,14 +29,15 @@ async function addExercise(exerciseId, event) {
   // Prevent the default anchor tag behavior
   event.preventDefault();
 
+  document.getElementById('loader').classList.add('active');
+
   // Check if the exercise is already added
   if (checkAlreadyAdded(exerciseId)) {
+    // Hide loader
+    document.getElementById('loader').classList.remove('active');
     alert('Exercise already added.');
     return;
   }
-
-  // Hide overlay
-  document.getElementById('overlay').classList.remove('active');
 
   try {
     // Fetch the exercise data
@@ -120,6 +121,13 @@ async function addExercise(exerciseId, event) {
   } catch (error) {
     console.error('Error:', error);
     alert('Failed to add exercise.');
+  }
+  finally {
+    // Hide loader
+    document.getElementById('loader').classList.remove('active');
+
+    // Hide overlay
+    document.getElementById('overlay').classList.remove('active');
   }
 }
 
