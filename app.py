@@ -189,11 +189,23 @@ def routines_new():
                     exercise_rest = int(exercise_rest)
                 except:
                     return display_error(
-                        f"Rest time for exercise {exercise_number} must be integer"
+                        f"Rest time for exercise {exercise_number} is not an integer"
                     )
 
-            # Ensure current exercise rest time range is valid and is multiple of 5
-            if exercise_rest < 1 or exercise_rest > 300 or exercise_rest % 5 != 0:
+            # Ensure current exercise rest time is positive
+            if exercise_rest < 0:
+                return display_error(
+                    f"Rest time for exercise {exercise_number} is not positive."
+                )
+
+            # Ensure current exercise rest time is less than 300
+            if exercise_rest > 300:
+                return display_error(
+                    f"Rest time for exercise {exercise_number} is too long."
+                )
+
+            # Ensure current exercise rest time is multiple of 5
+            if exercise_rest % 5 != 0:
                 return display_error(
                     f"Invalid rest time for exercise {exercise_number}."
                 )
@@ -215,6 +227,8 @@ def routines_new():
                 reps = request.form.get(
                     f"exercise-{exercise_number}-set-{set_number}-reps"
                 )
+
+                # Check if both weight and reps are missing
                 if not weight and not reps:
                     # Check if the current set is the first
                     if set_number == 1:
@@ -225,6 +239,8 @@ def routines_new():
                     else:
                         # The current exercise has no more sets
                         break
+
+                # TODO: add a hidden input with the number of sets
 
                 # Add set data to the list
                 exercise_sets.append({"weight": weight, "reps": reps})
