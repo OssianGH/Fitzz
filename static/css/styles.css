@@ -557,6 +557,29 @@ header .square-btn {
   width: 100%;
 }
 
+
+/* LOADER */
+.loader {
+  border: 0.5rem solid var(--c-brown);
+  border-top: 0.5rem solid var(--c-almond);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  animation: spin 1s linear infinite;
+  z-index: 1001;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
 /* OVERLAY */
 .overlay {
   position: fixed;
