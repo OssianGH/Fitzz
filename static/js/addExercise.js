@@ -74,7 +74,8 @@ async function addExercise(exerciseId, event) {
 
     // Set the inner HTML of the new exercise
     newExercise.innerHTML = `
-    <input  name="${exerciseNumberString}-id" type="hidden" value="${exercise.id}">
+    <input id="${exerciseNumberString}-id" name="${exerciseNumberString}-id" type="hidden" value="${exercise.id}">
+    <input id="${exerciseNumberString}-set-count" name="${exerciseNumberString}-set-count" type="hidden" value="0">
     <div class="exercise-name flex gap center-align between-justify">
       <div class="flex gap center-align">
         <div class="image-container">
@@ -83,16 +84,16 @@ async function addExercise(exerciseId, event) {
         <h3 class="h3 text-center no-margin">${exercise.name}</h3>
       </div>
       <div class="button-wrapper flex">
-        <button id=${exerciseNumberString}-add-set class="square-btn" type="button" onclick="addSet(${exerciseNumber})">
+        <button class="square-btn" id="${exerciseNumberString}-add-set" type="button" onclick="addSet(${exerciseNumber})">
           <i class="fa fa-plus"></i>
         </button>
-        <button id=${exerciseNumberString}-remove class="square-btn" type="button" onclick="removeExercise(${exerciseNumber})">
+        <button class="square-btn" id="${exerciseNumberString}-remove" type="button" onclick="removeExercise(${exerciseNumber})">
           <i class="fa fa-trash"></i>
         </button>
-        <button id=${exerciseNumberString}-move-up class="square-btn" type="button" onclick="moveExerciseUp(${exerciseNumber})">
+        <button class="square-btn" id="${exerciseNumberString}-move-up" type="button" onclick="moveExerciseUp(${exerciseNumber})">
           <i class="fa fa-arrow-up"></i>
         </button>
-        <button id=${exerciseNumberString}-move-down class="square-btn" type="button" onclick="moveExerciseDown(${exerciseNumber})">
+        <button class="square-btn" id="${exerciseNumberString}-move-down" type="button" onclick="moveExerciseDown(${exerciseNumber})">
           <i class="fa fa-arrow-down"></i>
         </button>
       </div>
@@ -111,8 +112,8 @@ async function addExercise(exerciseId, event) {
     exercisesContainer.appendChild(newExercise);
 
     // Ingrease the exercise count
-    let exerciseCountInput = document.getElementById('exercise-count')
-    let exerciseCount = exerciseCountInput.value
+    const exerciseCountInput = document.getElementById('exercise-count')
+    const exerciseCount = exerciseCountInput.value
     exerciseCountInput.value = parseInt(exerciseCount) + 1
 
     // Add the first set

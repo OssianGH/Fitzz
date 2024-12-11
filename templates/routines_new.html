@@ -21,10 +21,12 @@ New routine
 </div>
 <div class="container">
   <form action="/routines/new" method="post">
-    <input class="special-input" autocomplete="off" name="routine-name" type="text" placeholder="Routine name">
+    <input class="special-input" id="routine-name" name="routine-name" type="text" placeholder="Routine name"
+      autocomplete="off">
+    <input id="exercise-count" name="exercise-count" type="hidden" value="0">
     <div id="exercises"></div>
     <div class="flex gap center-justify">
-      <button id="add-exercise" class="btn" type="button">Add exercise</button>
+      <button class="btn" id="add-exercise" type="button">Add exercise</button>
       <button class="btn" type="submit">Save routine</button>
     </div>
     <div class="container separate"></div>
@@ -32,7 +34,7 @@ New routine
 </div>
 <div id="overlay" class="overlay">
   <div id="overlay-content" class="overlay-content">
-    <button id="hide-overlay" class="square-btn"><i class="fa fa-x"></i></button>
+    <button class="square-btn" id="hide-overlay"><i class="fa fa-x"></i></button>
     <div class="title-region flex center-justify center-align">
       <h2 class="h2 text-center">Add exercise</h2>
     </div>

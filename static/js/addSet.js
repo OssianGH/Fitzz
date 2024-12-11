@@ -22,15 +22,15 @@ function addSet(exerciseNumber) {
   <p class="no-margin">${setNumber}</p>
   <div class="input-wrapper flex gap center-align evenly-justify">
     <div class="input-group">
-      <input class="input" autocomplete="off" name="${exerciseNumberString}-set-${setNumber}-weight" type="number" min="1">
+      <input class="input" id="${exerciseNumberString}-set-${setNumber}-weight" name="${exerciseNumberString}-set-${setNumber}-weight" type="number" autocomplete="off" min="1">
       <label class="input-label">Weight</label>
     </div>
     <div class="input-group">
-      <input class="input" autocomplete="off" name="${exerciseNumberString}-set-${setNumber}-reps" type="number" min="1">
+      <input class="input" id="${exerciseNumberString}-set-${setNumber}-reps" name="${exerciseNumberString}-set-${setNumber}-reps" type="number" autocomplete="off" min="1">
       <label class="input-label">Reps</label>
     </div>
   </div>
-  <button class="square-btn" type="button" onclick="removeSet(${exerciseNumber}, ${setNumber})">
+  <button class="square-btn" id="${exerciseNumberString}-remove-set" type="button" onclick="removeSet(${exerciseNumber}, ${setNumber})">
     <i class="fa fa-trash"></i>
   </button>`;
 

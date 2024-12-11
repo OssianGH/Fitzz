@@ -11,8 +11,8 @@ function removeExercise(exerciseNumber) {
   }
 
   // Decrease the exercise count
-  let exerciseCountInput = document.getElementById('exercise-count')
-  let exerciseCount = exerciseCountInput.value
+  const exerciseCountInput = document.getElementById('exercise-count')
+  const exerciseCount = exerciseCountInput.value
   exerciseCountInput.value = parseInt(exerciseCount) - 1
 
   // Re-index exercises
