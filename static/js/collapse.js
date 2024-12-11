@@ -1,7 +1,15 @@
 // Wait for DOM content to load
 document.addEventListener('DOMContentLoaded', () => {
+  // Get the Toggle nav button
+  const toggleNavButton = document.getElementById('toggle-nav');
+
+  // Check the Toggle nav button exist
+  if (!toggleNavButton) {
+    return;
+  }
+
   // Add click event listener to the Toggle nav button
-  document.getElementById('toggle-nav').addEventListener('click', toggleNav);
+  toggleNavButton.addEventListener('click', toggleNav);
 });
 
 const toggleNav = () => {
