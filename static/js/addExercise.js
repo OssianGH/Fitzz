@@ -74,7 +74,7 @@ async function addExercise(exerciseId, event) {
 
     // Set the inner HTML of the new exercise
     newExercise.innerHTML = `
-    <input type="hidden" name="${exerciseNumberString}-id" value="${exercise.id}">
+    <input  name="${exerciseNumberString}-id" type="hidden" value="${exercise.id}">
     <div class="exercise-name flex gap center-align between-justify">
       <div class="flex gap center-align">
         <div class="image-container">
