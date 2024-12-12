@@ -37,16 +37,18 @@ function reindexExercises() {
     // Compose the new exercise string
     const newExerciseNumberString = `exercise-${newExerciseNumber}`;
 
-    // Update ID of the exercise
+    // Update ID of the exercise container
     exercise.setAttribute('id', newExerciseNumberString);
 
-    // Update the input with the exercise ID
-    exercise.querySelector(`input[name="${oldExerciseNumberString}-id"]`)
-      .setAttribute('name', `${newExerciseNumberString}-id`)
+    // Update the input with the ID of the exercise
+    const idInput = exercise.querySelector(`#${oldExerciseNumberString}-id`);
+    idInput.setAttribute('id', `${newExerciseNumberString}-id`);
+    idInput.setAttribute('name', `${newExerciseNumberString}-id`);
 
-    // Update the input with the exercise rest time
-    exercise.querySelector(`select[name="${oldExerciseNumberString}-rest"]`)
-      .setAttribute('name', `${newExerciseNumberString}-rest`)
+    const setCountInput = exercise
+      .querySelector(`#${oldExerciseNumberString}-set-count`);
+    setCountInput.setAttribute('id', `${newExerciseNumberString}-set-count`);
+    setCountInput.setAttribute('name', `${newExerciseNumberString}-set-count`);
 
     // Update the Add set button
     const addSetButton = exercise.querySelector(`#${oldExerciseNumberString}-add-set`);
@@ -71,9 +73,14 @@ function reindexExercises() {
     moveDownButton.setAttribute('id', `${newExerciseNumberString}-move-down`);
     moveDownButton.setAttribute('onclick', `moveExerciseDown('${newExerciseNumber}')`);
 
+    // Update the input with the exercise rest time
+    const restTimeSelect = exercise.querySelector(`#${oldExerciseNumberString}-rest`);
+    restTimeSelect.setAttribute('id', `${newExerciseNumberString}-rest`);
+    restTimeSelect.setAttribute('name', `${newExerciseNumberString}-rest`);
+
     // Update the sets container
-    exercise.querySelector(`#${oldExerciseNumberString}-sets`)
-      .setAttribute('id', `${newExerciseNumberString}-sets`);;
+    const setsContainer = exercise.querySelector(`#${oldExerciseNumberString}-sets`);
+    setsContainer.setAttribute('id', `${newExerciseNumberString}-sets`);
 
     // Re-index sets within the exercise
     reindexSets(newExerciseNumber);

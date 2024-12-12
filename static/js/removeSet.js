@@ -34,6 +34,9 @@ function reindexSets(exerciseNumber) {
 
   // Loop through each set in the container
   Array.from(setsContainer.children).forEach((set, index) => {
+    // Get the old set string
+    const oldSetString = set.getAttribute('id');
+
     // Determine the new set number
     const newSetNumber = index + 1;
 
@@ -41,22 +44,25 @@ function reindexSets(exerciseNumber) {
     set.setAttribute('id', `${exerciseNumberString}-set-${newSetNumber}`);
 
     // Update the set number
-    set.querySelector('p').textContent = newSetNumber;
+    const setLabel = set.querySelector(`#${oldSetString}-label`);
+    setLabel.setAttribute('id', `${exerciseNumberString}-set-${newSetNumber}-label`);
+    setLabel.textContent = newSetNumber;
 
-    // Loop through each input in the set
-    set.querySelectorAll('input').forEach(input => {
-      if (input.getAttribute('name').includes('-weight')) {
-        // Update the weight input
-        input
-          .setAttribute('name', `${exerciseNumberString}-set-${newSetNumber}-weight`);
-      } else if (input.getAttribute('name').includes('-reps')) {
-        // Update the reps input
-        input.setAttribute('name', `${exerciseNumberString}-set-${newSetNumber}-reps`)
-      }
-    });
+    // Update the weight input
+    const weightInput = set.querySelector(`#${oldSetString}-weight`);
+    weightInput
+      .setAttribute('id', `${exerciseNumberString}-set-${newSetNumber}-weight`);
+    weightInput
+      .setAttribute('name', `${exerciseNumberString}-set-${newSetNumber}-weight`);
+
+    // Update the reps input
+    const repsInput = set.querySelector(`#${oldSetString}-reps`);
+    repsInput.setAttribute('id', `${exerciseNumberString}-set-${newSetNumber}-reps`);
+    repsInput.setAttribute('name', `${exerciseNumberString}-set-${newSetNumber}-reps`);
 
     // Update the Remove set button
-    set.querySelector('.square-btn')
-      .setAttribute('onclick', `removeSet(${exerciseNumber}, ${newSetNumber})`);
+    const removeSetButton = set.querySelector(`#${oldSetString}-remove`);
+    removeSetButton.setAttribute('id', `${exerciseNumberString}-set-${newSetNumber}-remove`);
+    removeSetButton.setAttribute('onclick', `removeSet(${exerciseNumber}, ${newSetNumber})`);
   });
 }

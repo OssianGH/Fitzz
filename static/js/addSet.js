@@ -19,7 +19,7 @@ function addSet(exerciseNumber) {
 
   // Set the inner HTML of the new set
   newSet.innerHTML = `
-  <p class="no-margin">${setNumber}</p>
+  <p class="no-margin" id="${exerciseNumberString}-set-${setNumber}-label">${setNumber}</p>
   <div class="input-wrapper flex gap center-align evenly-justify">
     <div class="input-group">
       <input class="input" id="${exerciseNumberString}-set-${setNumber}-weight" name="${exerciseNumberString}-set-${setNumber}-weight" type="number" autocomplete="off" min="1">
@@ -30,7 +30,7 @@ function addSet(exerciseNumber) {
       <label class="input-label">Reps</label>
     </div>
   </div>
-  <button class="square-btn" id="${exerciseNumberString}-remove-set" type="button" onclick="removeSet(${exerciseNumber}, ${setNumber})">
+  <button class="square-btn" id="${exerciseNumberString}-set-${setNumber}-remove" type="button" onclick="removeSet(${exerciseNumber}, ${setNumber})">
     <i class="fa fa-trash"></i>
   </button>`;
 

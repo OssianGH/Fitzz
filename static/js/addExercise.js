@@ -100,7 +100,7 @@ async function addExercise(exerciseId, event) {
     </div>
     <div class="select-group">
       <label class="select-label">Rest time</label>
-      <select class="input" name="${exerciseNumberString}-rest">
+      <select class="input" id="${exerciseNumberString}-rest" name="${exerciseNumberString}-rest">
       </select>
     </div>
     <div id="${exerciseNumberString}-sets"></div>`;
