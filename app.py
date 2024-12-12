@@ -140,6 +140,12 @@ def routines():
     return display_error("Esto aún no está implementado.")
 
 
+@app.route("/routines/test")
+@login_required
+def routines_test():
+    """Test page for routines"""
+
+
 @app.route("/routines/new", methods=["GET", "POST"])
 @login_required
 def routines_new():
@@ -147,8 +153,6 @@ def routines_new():
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        print(request.form)
-
         # Access routine name
         routine_name = request.form.get("routine-name")
 
@@ -156,26 +160,70 @@ def routines_new():
         if not routine_name:
             return display_error("Missing routine name.")
 
+        # Access exercise count
+        exercise_count = request.form.get("exercise-count")
+
+        # Ensure exercise count was submitted
+        if not exercise_count:
+            return display_error(
+                """The server encountered an internal error and was unable to complete
+                your request."""
+            )
+
+        # Ensure exercise count is integer
+        try:
+            exercise_count = int(exercise_count)
+        except:
+            return display_error(
+                """The server encountered an internal error and was unable to complete
+                your request."""
+            )
+
+        # Ensure the routine has at least one exercise
+        if exercise_count < 1:
+            return display_error("The routine must have at least one exercise.")
+
         # Dictionary to store exercises and sets
         exercises_data = {}
 
-        # Initialize the exercie number
-        exercise_number = 1
-
-        # Loop through each exercise until there are no more
-        while True:
+        # Loop through each exercise
+        for exercise_number in range(1, exercise_count + 1):
             # Access form current exercise id
             exercise_id = request.form.get(f"exercise-{exercise_number}-id")
 
-            # Check if there is not an id for the current exercise
+            # Ensure current exercise id was submitted
             if not exercise_id:
-                # Check if the current exercise is the first
-                if exercise_number == 1:
-                    # The routine does not have any exercises
-                    return display_error("The routine must have at least one exercise.")
-                else:
-                    # The routine has no more exercises
-                    break
+                return display_error(
+                    """The server encountered an internal error and was unable to
+                    complete your request."""
+                )
+
+            # Access form current exercise set count
+            exercise_set_count = request.form.get(
+                f"exercise-{exercise_number}-set-count"
+            )
+
+            # Ensure current exercise set count was submitted
+            if not exercise_set_count:
+                return display_error(
+                    """The server encountered an internal error and was unable to
+                    complete your request."""
+                )
+
+            # Ensure current exercise set count is integer
+            try:
+                exercise_set_count = int(exercise_set_count)
+            except:
+                return display_error(
+                    """The server encountered an internal error and was unable to
+                    complete your request."""
+                )
+
+            # Ensure the current exercise has at least one set
+            if exercise_set_count < 1:
+                return display_error(
+                    f"Exercise {exercise_number} must have at least one set."
+                )
 
             # Access form current exercise rest time
             exercise_rest = request.form.get(f"exercise-{exercise_number}-rest")
@@ -213,40 +261,60 @@ def routines_new():
             # List to store sets of the current exercise
             exercise_sets = []
 
-            # Initialize the set number
-            set_number = 1
-
             # Loop through each set until there are no more
-            while True:
+            for set_number in range(1, exercise_set_count + 1):
                 # Access form current set weight
                 weight = request.form.get(
                     f"exercise-{exercise_number}-set-{set_number}-weight"
                 )
+
+                # Ensure current set weight was submitted
+                if not weight:
+                    return display_error(
+                        f"Missing exercise {exercise_number} set {set_number} weight."
+                    )
+
+                # Ensure current set weight is integer
+                try:
+                    weight = int(weight)
+                except:
+                    return display_error(
+                        f"Weight for exercise {exercise_number} set {set_number} is not integer."
+                    )
+
+                # Ensure current set weight is positive
+                if weight < 1:
+                    return display_error(
+                        f"Weight for exercise {exercise_number} set {set_number} is not positive."
+                    )
 
                 # Access form current set reps
                 reps = request.form.get(
                     f"exercise-{exercise_number}-set-{set_number}-reps"
                 )
 
-                # Check if both weight and reps are missing
-                if not weight and not reps:
-                    # Check if the current set is the first
-                    if set_number == 1:
-                        # The current exercise does not have any sets
-                        return display_error(
-                            f"Exercise {exercise_number} must have at least one set."
-                        )
-                    else:
-                        # The current exercise has no more sets
-                        break
+                # Ensure current set reps was submitted
+                if not reps:
+                    return display_error(
+                        f"Missing exercise {exercise_number} set {set_number} reps."
+                    )
 
-                # TODO: add a hidden input with the number of sets
+                # Ensure current set reps is integer
+                try:
+                    reps = int(reps)
+                except:
+                    return display_error(
+                        f"Reps for exercise {exercise_number} set {set_number} is not integer."
+                    )
+
+                # Ensure current set reps is positive
+                if reps < 1:
+                    return display_error(
+                        f"Reps for exercise {exercise_number} set {set_number} is not positive."
+                    )
 
                 # Add set data to the list
                 exercise_sets.append({"weight": weight, "reps": reps})
-
-                # Go to the next set
-                set_number += 1
 
             # Store the sets under the exercise ID
             exercises_data[exercise_id] = {
@@ -254,16 +322,9 @@ def routines_new():
                 "sets": exercise_sets,
             }
 
-            # Go to the next exercise
-            exercise_number += 1
-
-        # Processed data
-        print("Routine Name:", routine_name)
-        print("Exercises Data:", exercises_data)
-
         # Create databse entries
         routine_id = db.execute(
-            "INSERT INTO routine (user_id, name) VALUES(?, ?)",
+            "INSERT INTO routine (user_id, name) VALUES (?, ?)",
             session["user_id"],
             routine_name,
         )
@@ -360,7 +421,7 @@ def signup():
         try:
             # Insert user into database
             db.execute(
-                "INSERT INTO user (username, hash) VALUES(?, ?)",
+                "INSERT INTO user (username, hash) VALUES (?, ?)",
                 username,
                 generate_password_hash(password),
             )
