@@ -34,8 +34,8 @@ async function addExercise(exerciseId, event) {
   // Check if the exercise is already added
   if (checkAlreadyAdded(exerciseId)) {
     // Hide loader
-    document.getElementById('loader').classList.remove('active');
     alert('Exercise already added.');
+    document.getElementById('loader').classList.remove('active');
     return;
   }
 
@@ -112,9 +112,9 @@ async function addExercise(exerciseId, event) {
     exercisesContainer.appendChild(newExercise);
 
     // Ingrease the exercise count
-    const exerciseCountInput = document.getElementById('exercise-count')
-    const exerciseCount = exerciseCountInput.value
-    exerciseCountInput.value = parseInt(exerciseCount) + 1
+    const exerciseCountInput = document.getElementById('exercise-count');
+    const exerciseCount = exerciseCountInput.value;
+    exerciseCountInput.value = parseInt(exerciseCount) + 1;
 
     // Add the first set
     addSet(exerciseNumber);

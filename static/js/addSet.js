@@ -37,6 +37,11 @@ function addSet(exerciseNumber) {
   // Append new set to the sets container
   setsContainer.appendChild(newSet);
 
+  // Increase the set count for this exercise
+  const setCountInput = document.getElementById(`${exerciseNumberString}-set-count`);
+  const setCount = setCountInput.value;
+  setCountInput.value = parseInt(setCount) + 1;
+
   // Display the first remove set button
   displayFirstRemoveSetButton(exerciseNumber);
 
