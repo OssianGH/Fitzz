@@ -154,14 +154,14 @@ def routines_new():
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        # Access routine name
+        # Access form routine name
         routine_name = request.form.get("routine-name")
 
         # Ensure routine name was submitted
         if not routine_name:
-            return display_error("Missing routine name.")
+            return display_error("Routine name must be filled.")
 
-        # Access exercise count
+        # Access form exercise count
         exercise_count = request.form.get("exercise-count")
 
         # Ensure exercise count was submitted
@@ -182,7 +182,7 @@ def routines_new():
 
         # Ensure the routine has at least one exercise
         if exercise_count < 1:
-            return display_error("The routine must have at least one exercise.")
+            return display_error("There must be at least one exercise in the routine.")
 
         # Dictionary to store exercises and sets
         exercises_data = {}
@@ -238,31 +238,31 @@ def routines_new():
                     exercise_rest = int(exercise_rest)
                 except:
                     return display_error(
-                        f"Rest time for exercise {exercise_number} is not an integer"
+                        f"Exercise {exercise_number} rest time must be an integer"
                     )
 
             # Ensure current exercise rest time is positive
             if exercise_rest < 0:
                 return display_error(
-                    f"Rest time for exercise {exercise_number} is not positive."
+                    f"Exercise {exercise_number} rest time must be positive."
                 )
 
-            # Ensure current exercise rest time is less than 300
+            # Ensure current exercise rest time is less than 300 seconds
             if exercise_rest > 300:
                 return display_error(
-                    f"Rest time for exercise {exercise_number} is too long."
+                    f"Exercise {exercise_number} rest time is too long."
                 )
 
             # Ensure current exercise rest time is multiple of 5
             if exercise_rest % 5 != 0:
                 return display_error(
-                    f"Invalid rest time for exercise {exercise_number}."
+                    f"Exercise {exercise_number} rest time is invalid."
                 )
 
             # List to store sets of the current exercise
             exercise_sets = []
 
-            # Loop through each set until there are no more
+            # Loop through each set of the current exercise
             for set_number in range(1, exercise_set_count + 1):
                 # Access form current set weight
                 weight = request.form.get(
@@ -280,13 +280,13 @@ def routines_new():
                     weight = int(weight)
                 except:
                     return display_error(
-                        f"Weight for exercise {exercise_number} set {set_number} is not integer."
+                        f"Exercise {exercise_number} set {set_number} weight must be an integer."
                     )
 
                 # Ensure current set weight is positive
                 if weight < 1:
                     return display_error(
-                        f"Weight for exercise {exercise_number} set {set_number} is not positive."
+                        f"Exercise {exercise_number} set {set_number} weight must be positive."
                     )
 
                 # Access form current set reps
@@ -305,13 +305,13 @@ def routines_new():
                     reps = int(reps)
                 except:
                     return display_error(
-                        f"Reps for exercise {exercise_number} set {set_number} is not integer."
+                        f"Exercise {exercise_number} set {set_number} reps must be an integer."
                     )
 
                 # Ensure current set reps is positive
                 if reps < 1:
                     return display_error(
-                        f"Reps for exercise {exercise_number} set {set_number} is not positive."
+                        f"Exercise {exercise_number} set {set_number} reps must be positive."
                     )
 
                 # Add set data to the list
@@ -327,7 +327,7 @@ def routines_new():
         routine_id = db.execute(
             "INSERT INTO routine (user_id, name) VALUES (?, ?)",
             session["user_id"],
-            routine_name,
+            routine_name.strip(),
         )
 
         for position, (exercise_id, exercise) in enumerate(

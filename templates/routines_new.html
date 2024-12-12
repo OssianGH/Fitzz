@@ -9,6 +9,7 @@
     <script src="/static/js/overlay.js"></script>
     <script src="/static/js/removeExercise.js"></script>
     <script src="/static/js/removeSet.js"></script>
+    <script src="/static/js/validateRoutine.js"></script>
 {% endblock %}
 
 {% block title %}
@@ -20,7 +21,7 @@
         <h1 class="h1 text-center no-margin">New routine</h1>
     </div>
     <div class="container">
-        <form action="/routines/new" method="post">
+        <form id="routine-form" action="/routines/new" method="post">
             <input class="special-input" id="routine-name" name="routine-name" type="text" placeholder="Routine name" autocomplete="off">
             <input id="exercise-count" name="exercise-count" type="hidden" value="0">
             <div id="exercises"></div>

@@ -114,16 +114,13 @@ async function addExercise(exerciseId, event) {
     // Ingrease the exercise count
     const exerciseCountInput = document.getElementById('exercise-count');
     const exerciseCount = exerciseCountInput.value;
-    exerciseCountInput.value = parseInt(exerciseCount) + 1;
+    exerciseCountInput.value = parseInt(exerciseCount, 10) + 1;
 
     // Add the first set
     addSet(exerciseNumber);
 
     // Display the move buttons
     displayMoveButtons();
-
-    // Bind the animation for the new inputs to display animation 
-    window.bindInputListeners();
   } catch (error) {
     console.error('Error:', error);
     alert('Failed to add exercise.');

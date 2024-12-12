@@ -21,7 +21,7 @@ function removeSet(exerciseNumber, setNumber) {
   // Decrease the set count for this exercise
   const setCountInput = document.getElementById(`${exerciseNumberString}-set-count`);
   const setCount = setCountInput.value;
-  setCountInput.value = parseInt(setCount) - 1;
+  setCountInput.value = parseInt(setCount, 10) - 1;
 
   // Re-index sets
   reindexSets(exerciseNumber);

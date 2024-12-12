@@ -40,13 +40,13 @@ function addSet(exerciseNumber) {
   // Increase the set count for this exercise
   const setCountInput = document.getElementById(`${exerciseNumberString}-set-count`);
   const setCount = setCountInput.value;
-  setCountInput.value = parseInt(setCount) + 1;
+  setCountInput.value = parseInt(setCount, 10) + 1;
 
   // Display the first remove set button
   displayFirstRemoveSetButton(exerciseNumber);
 
   // Bind the animation for the new inputs to display animation 
-  window.bindInputListeners();
+  bindInputListeners();
 }
 
 function displayFirstRemoveSetButton(exerciseNumber) {

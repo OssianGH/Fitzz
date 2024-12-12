@@ -2,9 +2,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Bind event listeners initially
   bindInputListeners();
-
-  // Expose the bindEventListeners function globally
-  window.bindInputListeners = bindInputListeners;
 });
 
 function bindInputListeners() {
