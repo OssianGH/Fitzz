@@ -140,12 +140,6 @@ def routines():
     return display_error("Esto aún no está implementado.")
 
 
-@app.route("/routines/test")
-@login_required
-def routines_test():
-    """Test page for routines"""
-
-
 @app.route("/routines/new", methods=["GET", "POST"])
 @login_required
 def routines_new():
