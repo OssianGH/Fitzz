@@ -6,7 +6,13 @@ from flask import Flask, jsonify, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import login_required, display_error, exercise_image, muscle_group_image
+from helpers import (
+    display_error,
+    exercise_image,
+    format_add_exercise,
+    login_required,
+    muscle_group_image,
+)
 
 # Configure application
 app = Flask(__name__)
@@ -14,6 +20,7 @@ app = Flask(__name__)
 # Custom filters
 app.jinja_env.filters["exercise_image"] = exercise_image
 app.jinja_env.filters["muscle_group_image"] = muscle_group_image
+app.jinja_env.filters["format_add_exercise"] = format_add_exercise
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False

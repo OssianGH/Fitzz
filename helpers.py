@@ -8,6 +8,23 @@ def display_error(message):
     return render_template("error.html", message=message)
 
 
+def exercise_image(name, muscle_group):
+    """Get an exercise image path given its name and muscle group."""
+
+    exercises_path = "/static/images/exercises"
+
+    name = name.lower().replace(" ", "_")
+    muscle_group = muscle_group.lower()
+
+    return f"{exercises_path}/{muscle_group}/{name}.png"
+
+
+def format_add_exercise(exercise_id):
+    """Format the exercise id for onclick property of Add exercise button."""
+
+    return f"addExercise({exercise_id}, event)"
+
+
 def login_required(f):
     """
     Decorate routes to require login.
@@ -22,17 +39,6 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
-
-
-def exercise_image(name, muscle_group):
-    """Get an exercise image path given its name and muscle group."""
-
-    exercises_path = "/static/images/exercises"
-
-    name = name.lower().replace(" ", "_")
-    muscle_group = muscle_group.lower()
-
-    return f"{exercises_path}/{muscle_group}/{name}.png"
 
 
 def muscle_group_image(name):

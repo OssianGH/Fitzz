@@ -70,8 +70,7 @@ function displayFirstRemoveSetButton(exerciseNumber) {
   // Check if there is more than one set in the container
   if (setsNumber > 1) {
     firstSet.querySelector('.square-btn').style.visibility = 'visible';
-  }
-  else {
+  } else {
     firstSet.querySelector('.square-btn').style.visibility = 'hidden';
   }
 }

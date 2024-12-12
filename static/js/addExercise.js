@@ -127,8 +127,7 @@ async function addExercise(exerciseId, event) {
   } catch (error) {
     console.error('Error:', error);
     alert('Failed to add exercise.');
-  }
-  finally {
+  } finally {
     // Hide loader
     document.getElementById('loader').classList.remove('active');
 
@@ -155,8 +154,7 @@ function displayMoveButtons() {
     // Check if the exercise is the first one
     if (exerciseNumber === 1) {
       moveUpButton.style.display = 'none';
-    }
-    else {
+    } else {
       moveUpButton.style.display = 'inline-block';
     }
 
@@ -166,8 +164,7 @@ function displayMoveButtons() {
     // Check if the exercise is the last one
     if (exerciseNumber === exercisesContainer.childElementCount) {
       moveDownButton.style.display = 'none';
-    }
-    else {
+    } else {
       moveDownButton.style.display = 'inline-block';
     }
   });
