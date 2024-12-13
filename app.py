@@ -48,8 +48,52 @@ def index():
     # Query database for username
     user = db.execute("SELECT username FROM user WHERE id = ?", session["user_id"])[0]
 
+    # Query database for all user's routines
+    routine_names = db.execute(
+        "SELECT id, name FROM routine WHERE user_id = ?", session["user_id"]
+    )
+
+    # Map routine IDs to their names
+    routine_map = {routine["id"]: routine["name"] for routine in routine_names}
+
+    # Query database for all exercises in user's routines
+    exercises = db.execute(
+        """
+            SELECT
+                r.id AS routine_id,
+                e.name AS exercise_name
+            FROM routine r
+            JOIN routine_exercise re
+            ON r.id = re.routine_id
+            JOIN exercise e
+            ON re.exercise_id = e.id
+            WHERE r.user_id = ?
+            ORDER BY r.id, re.position
+        """,
+        session["user_id"],
+    )
+
+    # Create a dictionary to store exercises by routine
+    routine_exercises = defaultdict(list)
+
+    # Loop through exercises in each routine
+    for exercise in exercises:
+        # Add exercise to the dictionary on the corresponding routine ID
+        routine_exercises[exercise["routine_id"]].append(exercise["exercise_name"])
+
+    # Create a list to store routines
+    routines = []
+    for routine_id, exercises in routine_exercises.items():
+        routines.append(
+            {
+                "id": routine_id,
+                "name": routine_map[routine_id],
+                "exercises": ", ".join(exercises),
+            }
+        )
+
     # Display welcome page
-    return render_template("index.html", username=user["username"])
+    return render_template("index.html", username=user["username"], routines=routines)
 
 
 @app.route("/exercise/<int:exercise_id>")
