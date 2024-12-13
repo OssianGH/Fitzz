@@ -21,7 +21,7 @@
         <h1 class="h1 text-center no-margin">New routine</h1>
     </div>
     <div class="container">
-        <form id="routine-form" action="/routines/new" method="post">
+        <form id="routine-form" action="/routine/new" method="post">
             <input class="special-input" id="routine-name" name="routine-name" type="text" placeholder="Routine name" autocomplete="off">
             <input id="exercise-count" name="exercise-count" type="hidden" value="0">
             <div id="exercises"></div>
@@ -36,7 +36,7 @@
         <div id="overlay-content" class="overlay-content">
             <button class="square-btn" id="hide-overlay"><i class="fa fa-x"></i></button>
             <div class="title-region flex center-justify center-align">
-                <h2 class="h2 text-center">Add exercise</h2>
+                <h2 class="h2 text-center no-margin">Add exercise</h2>
             </div>
             {% for muscle_group, exercises in exercises_by_muscle.items() %}
                 <div class="muscle flex gap center-align">
