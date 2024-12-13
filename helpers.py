@@ -2,8 +2,12 @@ from flask import redirect, render_template, session
 from functools import wraps
 
 
-def display_error(message):
+def display_error(message=""):
     """Render message as an error to user."""
+
+    if not message:
+        message = """The server encountered an internal error and was unable to complete
+                your request."""
 
     return render_template("error.html", message=message)
 

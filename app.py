@@ -166,19 +166,13 @@ def routines_new():
 
         # Ensure exercise count was submitted
         if not exercise_count:
-            return display_error(
-                """The server encountered an internal error and was unable to complete
-                your request."""
-            )
+            return display_error()
 
         # Ensure exercise count is integer
         try:
             exercise_count = int(exercise_count)
         except:
-            return display_error(
-                """The server encountered an internal error and was unable to complete
-                your request."""
-            )
+            return display_error()
 
         # Ensure the routine has at least one exercise
         if exercise_count < 1:
@@ -194,10 +188,7 @@ def routines_new():
 
             # Ensure current exercise id was submitted
             if not exercise_id:
-                return display_error(
-                    """The server encountered an internal error and was unable to
-                    complete your request."""
-                )
+                return display_error()
 
             # Access form current exercise set count
             exercise_set_count = request.form.get(
@@ -206,19 +197,13 @@ def routines_new():
 
             # Ensure current exercise set count was submitted
             if not exercise_set_count:
-                return display_error(
-                    """The server encountered an internal error and was unable to
-                    complete your request."""
-                )
+                return display_error()
 
             # Ensure current exercise set count is integer
             try:
                 exercise_set_count = int(exercise_set_count)
             except:
-                return display_error(
-                    """The server encountered an internal error and was unable to
-                    complete your request."""
-                )
+                return display_error()
 
             # Ensure the current exercise has at least one set
             if exercise_set_count < 1:
