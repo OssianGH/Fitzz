@@ -101,13 +101,13 @@ def get_exercise(exercise_id):
     # Query database for exercise with the id
     exercise = db.execute(
         """
-            SELECT 
+            SELECT
                 exercise.id AS id,
-                exercise.name AS name, 
-                muscle_group.name AS muscle_group 
-            FROM exercise 
-            JOIN muscle_group 
-            ON exercise.muscle_group_id = muscle_group.id 
+                exercise.name AS name,
+                muscle_group.name AS muscle_group
+            FROM exercise
+            JOIN muscle_group
+            ON exercise.muscle_group_id = muscle_group.id
             WHERE exercise.id = ?
         """,
         exercise_id,
@@ -182,16 +182,7 @@ def logout():
     return redirect("/")
 
 
-@app.route("/routines")
-@login_required
-def routines():
-    """Show user's routines"""
-
-    # Display routines page
-    return display_error("Esto aún no está implementado.")
-
-
-@app.route("/routines/new", methods=["GET", "POST"])
+@app.route("/routine/new", methods=["GET", "POST"])
 @login_required
 def routines_new():
     """Create a new routine"""
@@ -378,8 +369,8 @@ def routines_new():
                     routine_set["reps"],
                 )
 
-        # Redirect user to routines page
-        return redirect("/routines")
+        # Redirect user to home page
+        return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
