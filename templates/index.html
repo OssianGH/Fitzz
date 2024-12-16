@@ -1,44 +1,47 @@
 {% extends "base.html" %}
 
 {% block scripts %}
-<script src="/static/js/collapse.js" defer></script>
+    <script src="/static/js/collapse.js"></script>
 {% endblock %}
 
 {% block title %}
-Welcome
+    Welcome
 {% endblock %}
 
 {% block main %}
-<div class="welcome">
-  <div class="container title-region flex column center-justify">
-    <h1 class="h1 no-margin">Welcome, {{ username }}.</h1>
-    <p>Ready for workout?</p>
-  </div>
-  <div class="container separate grid">
-    <div class="card">
-      <a class="flex column between-justify" href="/workouts/start">
-        <h3 class="h3 no-margin">Start workout</h3>
-        <p class="no-margin">Use one of your routines and let Fitzz guide your training.</p>
-      </a>
+    <div class="container title-region flex column center-justify">
+        <h1 class="h1 no-margin">Welcome, {{ username }}.</h1>
+        <p>Ready for workout?</p>
     </div>
-    <div class="card">
-      <a class="flex column between-justify" href="/workouts">
-        <h3 class="h3 no-margin">Workouts</h3>
-        <p class="no-margin">Review workout history.</p>
-      </a>
+    <div class="container">
+        <h2 class="h2">Routines</h2>
+        <div class="routines grid">
+            <div class="card add">
+                <a href="/routine/new" class="flex column center-justify center-align gap">
+                    <i class="fa fa-plus"></i>
+                    <h3 class="h3 text-center no-margin">Create routine</h3>
+                </a>
+            </div>
+            {% for routine in routines %}
+                <div class="card">
+                    <a href="/routine/view/{{ loop.index }}">
+
+                        <h3 class="h3 no-margin">{{ routine.name }}</h3>
+                        <p>{{ routine.exercises }}</p>
+                        <div class="button-wrapper flex">
+                            <form action="/routine/edit" method="post">
+                                <input id="routine-{{ loop.index }}-id" name="routine-{{ loop.index }}-id" type="hidden" value="{{ routine.id }}">
+                                <button class="btn" type="submit">Edit</button>
+                            </form>
+                            <form action="/routine/remove" method="post">
+                                <input id="routine-{{ loop.index }}-id" name="routine-{{ loop.index }}-id" type="hidden" value="{{ routine.id }}">
+                                <button class="btn" type="submit">Remove</button>
+                            </form>
+                        </div>
+                    </a>
+
+                </div>
+            {% endfor %}
+        </div>
     </div>
-    <div class="card">
-      <a class="flex column between-justify" href="/routines">
-        <h3 class="h3 no-margin">Routines</h3>
-        <p class="no-margin">Review and change the weight, reps, or sets of your routines, or create new ones.</p>
-      </a>
-    </div>
-    <div class="card">
-      <a class="flex column between-justify" href="/statistics">
-        <h3 class="h3 no-margin">Statistics</h3>
-        <p class="no-margin">View your muscle distribution for the month or all time.</p>
-      </a>
-    </div>
-  </div>
-</div>
 {% endblock %}

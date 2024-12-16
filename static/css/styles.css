@@ -346,6 +346,59 @@ header .square-btn {
   row-gap: 1rem;
 }
 
+/* ROUTINES LIST */
+.routines {
+  margin-bottom: 2.75rem;
+}
+
+.routines .card {
+  height: auto;
+  width: min(30rem, 100%);
+  padding: 1.75rem;
+}
+
+.routines .card.add {
+  height: 100%;
+  padding: 3rem;
+}
+
+.routines .card.add a {
+  font-size: 2rem;
+  color: var(--c-dark-blue);
+}
+
+.routines .card.add .h3 {
+  margin-bottom: 0;
+}
+
+.routines .card .h3 {
+  margin-bottom: 1.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.routines .card p {
+  height: 3.25rem;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.routines.grid {
+  grid-template-columns: 1fr;
+  row-gap: 3rem;
+}
+
+.routines .card .button-wrapper {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 
 /* CARD */
 .card {
@@ -694,6 +747,10 @@ header .square-btn {
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(14.375rem, 1fr));
     row-gap: 2rem;
+  }
+
+  .routines.grid {
+    grid-template-columns: repeat(auto-fit, minmax(31.5rem, 1fr));
   }
 
   .card {
