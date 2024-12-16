@@ -150,6 +150,7 @@ header .square-btn {
   opacity: 1;
   top: 3.25rem;
   visibility: visible;
+  box-shadow: 0 0.8rem 0.8rem -0.8rem rgba(0, 0, 0, 0.6);
 }
 
 .collapse>ul>li {
