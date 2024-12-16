@@ -97,6 +97,7 @@ def index():
 
 
 @app.route("/exercise/<int:exercise_id>")
+@login_required
 def get_exercise(exercise_id):
     # Query database for exercise with the id
     exercise = db.execute(
@@ -184,7 +185,7 @@ def logout():
 
 @app.route("/routine/new", methods=["GET", "POST"])
 @login_required
-def routines_new():
+def routine_new():
     """Create a new routine"""
 
     # User reached route via POST (as by submitting a form via POST)
@@ -343,7 +344,7 @@ def routines_new():
                 "sets": exercise_sets,
             }
 
-        # Create databse entries
+        # Create database entries
         routine_id = db.execute(
             "INSERT INTO routine (user_id, name) VALUES (?, ?)",
             session["user_id"],
