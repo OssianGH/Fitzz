@@ -349,6 +349,7 @@ header .square-btn {
 
 /* ROUTINES LIST */
 .routines {
+  padding: 0 1rem;
   margin-bottom: 2.75rem;
 }
 
