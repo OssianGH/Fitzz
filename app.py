@@ -63,10 +63,8 @@ def index():
                 r.id AS routine_id,
                 e.name AS exercise_name
             FROM routine r
-            JOIN routine_exercise re
-            ON r.id = re.routine_id
-            JOIN exercise e
-            ON re.exercise_id = e.id
+            JOIN routine_exercise re ON r.id = re.routine_id
+            JOIN exercise e ON re.exercise_id = e.id
             WHERE r.user_id = ?
             ORDER BY r.id, re.position
         """,
