@@ -479,9 +479,9 @@ def new():
         )
 
 
-@app.route("/routine/view", methods=["POST"])
+@app.route("/view")
 @login_required
-def routine_view():
+def view():
     """View routine exercises and sets"""
 
     return "Por implementar"
