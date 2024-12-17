@@ -95,6 +95,20 @@ def index():
     # Display welcome page
     return render_template("index.html", username=user["username"], routines=routines)
 
+@app.route("/delete/<int:routine_id>")
+@login_required
+def delete(routine_id):
+    """Delete a routine"""
+
+    return display_error("Not implemented yet.")
+
+
+@app.route("/edit/<int:routine_id>", methods=["GET", "POST"])
+@login_required
+def edit(routine_id):
+    """Edit a routine"""
+
+    return display_error("Not implemented yet.")
 
 @app.route("/exercise/<int:exercise_id>")
 @login_required
@@ -412,10 +426,64 @@ def new():
         )
 
 
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    """Register user"""
+
+    # Forget any user_id
+    session.clear()
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+        # Access form username
+        username = request.form.get("username")
+
+        # Ensure username was submitted
+        if not username:
+            return display_error("Missing username.")
+
+        # Access form password
+        password = request.form.get("password")
+
+        # Ensure password was submitted
+        if not password:
+            return display_error("Missing password.")
+
+        # Acces from password confirmation
+        confirmation = request.form.get("confirmation")
+
+        # Ensure password confirmation was submitted
+        if not confirmation:
+            return display_error("Missing password confirmation.")
+
+        # Ensure passwords match
+        if password != confirmation:
+            return display_error("Passwords don't match.")
+
+        try:
+            # Insert user into database
+            db.execute(
+                "INSERT INTO user (username, hash) VALUES (?, ?)",
+                username,
+                generate_password_hash(password),
+            )
+        except ValueError:
+            # Render an error if user already exists.
+            return display_error("Username already exists.")
+
+        # Redirect user to login form
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        # Display sign up page
+        return render_template("signup.html")
+
+
 @app.route("/view/<int:routine_id>")
 @login_required
 def view(routine_id):
-    """Get routine details from the database given its ID"""
+    """View a previously created routine given its ID"""
 
     # Query database for routine of the user with the given ID
     routine = db.execute(
@@ -477,57 +545,3 @@ def view(routine_id):
         routine_name=routine[0]["name"],
         exercises=exercises,
     )
-
-
-@app.route("/signup", methods=["GET", "POST"])
-def signup():
-    """Register user"""
-
-    # Forget any user_id
-    session.clear()
-
-    # User reached route via POST (as by submitting a form via POST)
-    if request.method == "POST":
-        # Access form username
-        username = request.form.get("username")
-
-        # Ensure username was submitted
-        if not username:
-            return display_error("Missing username.")
-
-        # Access form password
-        password = request.form.get("password")
-
-        # Ensure password was submitted
-        if not password:
-            return display_error("Missing password.")
-
-        # Acces from password confirmation
-        confirmation = request.form.get("confirmation")
-
-        # Ensure password confirmation was submitted
-        if not confirmation:
-            return display_error("Missing password confirmation.")
-
-        # Ensure passwords match
-        if password != confirmation:
-            return display_error("Passwords don't match.")
-
-        try:
-            # Insert user into database
-            db.execute(
-                "INSERT INTO user (username, hash) VALUES (?, ?)",
-                username,
-                generate_password_hash(password),
-            )
-        except ValueError:
-            # Render an error if user already exists.
-            return display_error("Username already exists.")
-
-        # Redirect user to login form
-        return redirect("/")
-
-    # User reached route via GET (as by clicking a link or via redirect)
-    else:
-        # Display sign up page
-        return render_template("signup.html")

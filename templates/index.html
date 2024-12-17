@@ -29,11 +29,11 @@
                         <h3 class="h3 no-margin">{{ routine.name }}</h3>
                         <p>{{ routine.exercises }}</p>
                         <div class="button-wrapper flex">
-                            <form action="/edit/{{ routine.id }}" method="post">
+                            <form action="/edit/{{ routine.id }}" method="get">
                                 <button class="btn" type="submit">Edit</button>
                             </form>
-                            <form action="/edit/{{ routine.id }}" method="post">
-                                <button class="btn" type="submit">Remove</button>
+                            <form action="/delete/{{ routine.id }}" method="get">
+                                <button class="btn" type="submit">Delete</button>
                             </form>
                         </div>
                     </a>
