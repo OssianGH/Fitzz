@@ -19,16 +19,16 @@
                 <div class="exercise">
                     <div class="exercise-name flex gap center-align between-justify">
                         <div class="flex gap center-align">
-                        <div class="image-container">
-                            <img class="image" src="{{ exercise.name | exercise_image(exercise.muscle_group) }}" alt="{{ exercise.name }}">
-                        </div>
-                        <h3 class="h3 text-center no-margin">{{ exercise.name }}</h3>
+                            <div class="image-container">
+                                <img class="image" src="{{ exercise.name | exercise_image(exercise.muscle_group) }}" alt="{{ exercise.name }}">
+                            </div>
+                            <h3 class="h3 text-center no-margin">{{ exercise.name }}</h3>
                         </div>
                     </div>
                     <div class="select-group">
                         <label class="select-label">Rest time</label>
                         <select class="input static">
-                        <option>{{ exercise.rest_time | format_seconds }}</option>
+                            <option>{{ exercise.rest_time | format_seconds }}</option>
                         </select>
                     </div>
                     <div>
@@ -37,12 +37,12 @@
                                 <p class="no-margin"> {{ loop.index }} </p>
                                 <div class="input-wrapper flex gap center-align evenly-justify">
                                     <div class="input-group">
-                                    <input class="input active" type="number" value="{{ set.weight }}" readonly>
-                                    <label class="input-label">Weight</label>
+                                        <input class="input active" type="number" value="{{ set.weight }}" readonly>
+                                        <label class="input-label">Weight</label>
                                     </div>
                                     <div class="input-group">
-                                    <input class="input active" type="number" value="{{ set.repetitions }}" readonly>
-                                    <label class="input-label">Reps</label>
+                                        <input class="input active" type="number" value="{{ set.repetitions }}" readonly>
+                                        <label class="input-label">Reps</label>
                                     </div>
                                 </div>
                             </div>
@@ -50,14 +50,14 @@
                     </div>
                 </div>
             {% endfor %}
-        <div class="flex gap center-justify">
-            <form action="/edit/{{ routine_id }}" method="get">
-                <button class="btn" type="submit">Edit</button>
-            </form>
-            <form action="/delete/{{ routine_id }}" method="get">
-                <button class="btn" type="submit">Delete</button>
-            </form>
+            <div class="flex gap center-justify">
+                <form action="/edit/{{ routine_id }}" method="get">
+                    <button class="btn" type="submit">Edit</button>
+                </form>
+                <form action="/delete/{{ routine_id }}" method="get">
+                    <button class="btn" type="submit">Delete</button>
+                </form>
+            </div>
+            <div class="container separate"></div>
         </div>
-        <div class="container separate"></div>
-    </div>
 {% endblock %}

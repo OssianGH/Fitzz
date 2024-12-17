@@ -93,7 +93,7 @@
         </form>
     </div>
     <div class="overlay" id="overlay">
-        <div class="overlay-content" id="overlay-content" >
+        <div class="overlay-content" id="overlay-content">
             <button class="square-btn" id="hide-overlay">
                 <i class="fa fa-x"></i>
             </button>
@@ -101,28 +101,27 @@
                 <h2 class="h2 text-center no-margin">Add exercise</h2>
             </div>
             {% for muscle_group, exercises in exercises_by_muscle.items() %}
-            <div class="muscle flex gap center-align">
-                <div class="image-container">
-                    <img class="image" src="{{ muscle_group | muscle_group_image }}">
+                <div class="muscle flex gap center-align">
+                    <div class="image-container">
+                        <img class="image" src="{{ muscle_group | muscle_group_image }}">
+                    </div>
+                    <h3 class="h3 no-margin">{{ muscle_group }}</h3>
                 </div>
-                <h3 class="h3 no-margin">{{ muscle_group }}</h3>
-            </div>
-            <div class="exercises grid">
-                {% for exercise in exercises %}
-                <div class="card">
-                    <a class="flex column center-align between-justify" href="#" onclick="{{ exercise.id | format_add_exercise }}">
-                        <div class="image-container">
-                            <img class="image" src="{{ exercise.name | exercise_image(muscle_group) }}"
-                                alt="{{ exercise.name }}">
+                <div class="exercises grid">
+                    {% for exercise in exercises %}
+                        <div class="card">
+                            <a class="flex column center-align between-justify" href="#" onclick="{{ exercise.id | format_add_exercise }}">
+                                <div class="image-container">
+                                    <img class="image" src="{{ exercise.name | exercise_image(muscle_group) }}" alt="{{ exercise.name }}">
+                                </div>
+                                <div class="info">
+                                    <p class="info-name no-margin">{{ exercise.name }}</p>
+                                    <p class="info-muscle no-margin">{{ muscle_group }}</p>
+                                </div>
+                            </a>
                         </div>
-                        <div class="info">
-                            <p class="info-name no-margin">{{ exercise.name }}</p>
-                            <p class="info-muscle no-margin">{{ muscle_group }}</p>
-                        </div>
-                    </a>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
             {% endfor %}
         </div>
     </div>
