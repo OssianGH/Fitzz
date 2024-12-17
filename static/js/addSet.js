@@ -11,11 +11,11 @@ function addSet(exerciseNumber) {
   // Create the new set div
   const newSet = document.createElement('div');
 
-  // Assign a unique ID to the new set
-  newSet.setAttribute('id', `${exerciseNumberString}-set-${setNumber}`);
-
   // Assign the class name to the new set
   newSet.setAttribute('class', 'exercise-set flex gap center-align')
+
+  // Assign a unique ID to the new set
+  newSet.setAttribute('id', `${exerciseNumberString}-set-${setNumber}`);
 
   // Set the inner HTML of the new set
   newSet.innerHTML = `
