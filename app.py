@@ -99,7 +99,7 @@ def index():
 def get_exercise(exercise_id):
     """Get exercise details from the database given its ID"""
 
-    # Query database for exercise with the given id
+    # Query database for exercise with the given ID
     exercise = db.execute(
         """
             SELECT
@@ -124,77 +124,6 @@ def get_exercise(exercise_id):
             "id": exercise[0]["id"],
             "name": exercise[0]["name"],
             "muscle_group": exercise[0]["muscle_group"],
-        }
-    )
-
-
-@app.route("/routine/<int:routine_id>")
-@login_required
-def get_routine(routine_id):
-    """Get routine details from the database given its ID"""
-
-    # Query database for routine of the user with the given id
-    routine_name = db.execute(
-        "SELECT name FROM routine WHERE id = ? AND user_id = ?",
-        routine_id,
-        session["user_id"],
-    )
-
-    # Ensure routine exists
-    if not routine_name:
-        return display_error()
-
-    # Query database for exercises and sets of the routine of the user with the given id
-    exercises = db.execute(
-        """
-            SELECT 
-                e.id as exercise_id,
-                e.name as exercise_name,
-                re.rest_time,
-                rs.weight,
-                rs.repetitions
-            FROM routine r
-            JOIN routine_exercise re ON r.id = re.routine_id
-            JOIN exercise e ON re.exercise_id = e.id
-            JOIN routine_set rs ON re.id = rs.routine_exercise_id
-            WHERE r.id = ? AND r.user_id = ?
-            ORDER BY re.position, rs.set_number;
-        """,
-        routine_id,
-        session["user_id"],
-    )
-
-    # Dictionary to store exercises and sets
-    exercises_grouped = defaultdict(
-        lambda: {"exercise_name": "", "rest_time": 0, "sets": []}
-    )
-
-    # Loop through each exercise
-    for exercise in exercises:
-        # Get the exercise ID
-        exercise_id = exercise["exercise_id"]
-
-        # Add exercise data to the dictionary
-        exercises_grouped[exercise_id]["exercise_name"] = exercise["exercise_name"]
-        exercises_grouped[exercise_id]["rest_time"] = exercise["rest_time"]
-        exercises_grouped[exercise_id]["sets"].append(
-            {"weight": exercise["weight"], "repetitions": exercise["repetitions"]}
-        )
-
-    # Return routine details as JSON
-    return jsonify(
-        {
-            "routine_id": routine_id,
-            "routine_name": routine_name[0]["name"],
-            "exercises": [
-                {
-                    "exercise_id": key,
-                    "exercise_name": value["exercise_name"],
-                    "rest_time": value["rest_time"],
-                    "sets": value["sets"],
-                }
-                for key, value in exercises_grouped.items()
-            ],
         }
     )
 
@@ -292,10 +221,10 @@ def new():
 
         # Loop through each exercise
         for exercise_number in range(1, exercise_count + 1):
-            # Access form current exercise id
+            # Access form current exercise ID
             exercise_id = request.form.get(f"exercise-{exercise_number}-id")
 
-            # Ensure current exercise id was submitted
+            # Ensure current exercise ID was submitted
             if not exercise_id:
                 return display_error()
 
@@ -417,13 +346,14 @@ def new():
                 "sets": exercise_sets,
             }
 
-        # Create database entries
+        # Insert routine into database
         routine_id = db.execute(
             "INSERT INTO routine (user_id, name) VALUES (?, ?)",
             session["user_id"],
             routine_name.strip(),
         )
 
+        # Insert exercises of the routine into database
         for position, (exercise_id, exercise) in enumerate(
             exercises_data.items(), start=1
         ):
@@ -434,6 +364,7 @@ def new():
                 position,
                 exercise["rest_time"],
             )
+            # Insert sets of the current exercise into database
             for set_number, routine_set in enumerate(exercise["sets"], start=1):
                 db.execute(
                     "INSERT INTO routine_set (routine_exercise_id, set_number, weight, repetitions) VALUES (?, ?, ?, ?)",
@@ -479,12 +410,65 @@ def new():
         )
 
 
-@app.route("/view")
+@app.route("/view/<int:routine_id>")
 @login_required
-def view():
-    """View routine exercises and sets"""
+def view(routine_id):
+    """Get routine details from the database given its ID"""
 
-    return "Por implementar"
+    # Query database for routine of the user with the given ID
+    routine = db.execute(
+        "SELECT name FROM routine WHERE id = ? AND user_id = ?",
+        routine_id,
+        session["user_id"],
+    )
+
+    # Ensure routine exists
+    if not routine:
+        return display_error()
+
+    # Query database for sets of the routine of the user with the given ID
+    exercises = db.execute(
+        """
+            SELECT 
+                e.id as exercise_id,
+                e.name as exercise_name,
+                re.rest_time,
+                rs.weight,
+                rs.repetitions
+            FROM routine r
+            JOIN routine_exercise re ON r.id = re.routine_id
+            JOIN exercise e ON re.exercise_id = e.id
+            JOIN routine_set rs ON re.id = rs.routine_exercise_id
+            WHERE r.id = ? AND r.user_id = ?
+            ORDER BY re.position, rs.set_number;
+        """,
+        routine_id,
+        session["user_id"],
+    )
+
+    # Dictionary to store exercises and sets
+    exercises_grouped = defaultdict(
+        lambda: {"exercise_name": "", "rest_time": 0, "sets": []}
+    )
+
+    # Loop through each exercise
+    for exercise in exercises:
+        # Get the exercise ID
+        exercise_id = exercise["exercise_id"]
+
+        # Add exercise data to the dictionary
+        exercises_grouped[exercise_id]["exercise_name"] = exercise["exercise_name"]
+        exercises_grouped[exercise_id]["rest_time"] = exercise["rest_time"]
+        exercises_grouped[exercise_id]["sets"].append(
+            {"weight": exercise["weight"], "repetitions": exercise["repetitions"]}
+        )
+
+    print("routine_id", routine_id)
+    print("routine_name", routine[0]["name"])
+    for key, value in exercises_grouped.items():
+        print(key, value)
+
+    return "asfjd"
 
 
 @app.route("/signup", methods=["GET", "POST"])
