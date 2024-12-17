@@ -10,6 +10,7 @@ from helpers import (
     display_error,
     exercise_image,
     format_add_exercise,
+    format_seconds,
     login_required,
     muscle_group_image,
 )
@@ -19,8 +20,9 @@ app = Flask(__name__)
 
 # Custom filters
 app.jinja_env.filters["exercise_image"] = exercise_image
-app.jinja_env.filters["muscle_group_image"] = muscle_group_image
 app.jinja_env.filters["format_add_exercise"] = format_add_exercise
+app.jinja_env.filters["format_seconds"] = format_seconds
+app.jinja_env.filters["muscle_group_image"] = muscle_group_image
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
@@ -405,7 +407,7 @@ def new():
 
         # Display new routine page
         return render_template(
-            "routines_new.html",
+            "new.html",
             exercises_by_muscle=exercises_by_muscle,
         )
 
@@ -424,20 +426,22 @@ def view(routine_id):
 
     # Ensure routine exists
     if not routine:
-        return display_error()
+        return display_error("Routine not found.")
 
     # Query database for sets of the routine of the user with the given ID
-    exercises = db.execute(
+    exercises_flat = db.execute(
         """
             SELECT 
                 e.id as exercise_id,
                 e.name as exercise_name,
+                mg.name as muscle_group,
                 re.rest_time,
                 rs.weight,
                 rs.repetitions
             FROM routine r
             JOIN routine_exercise re ON r.id = re.routine_id
             JOIN exercise e ON re.exercise_id = e.id
+            JOIN muscle_group mg ON e.muscle_group_id = mg.id
             JOIN routine_set rs ON re.id = rs.routine_exercise_id
             WHERE r.id = ? AND r.user_id = ?
             ORDER BY re.position, rs.set_number;
@@ -447,28 +451,32 @@ def view(routine_id):
     )
 
     # Dictionary to store exercises and sets
-    exercises_grouped = defaultdict(
-        lambda: {"exercise_name": "", "rest_time": 0, "sets": []}
+    exercises = defaultdict(
+        lambda: {"name": "", "muscle_group": "", "rest_time": 0, "sets": []}
     )
 
     # Loop through each exercise
-    for exercise in exercises:
+    for exercise in exercises_flat:
         # Get the exercise ID
         exercise_id = exercise["exercise_id"]
 
         # Add exercise data to the dictionary
-        exercises_grouped[exercise_id]["exercise_name"] = exercise["exercise_name"]
-        exercises_grouped[exercise_id]["rest_time"] = exercise["rest_time"]
-        exercises_grouped[exercise_id]["sets"].append(
+        exercises[exercise_id]["name"] = exercise["exercise_name"]
+        exercises[exercise_id]["muscle_group"] = exercise["muscle_group"]
+        exercises[exercise_id]["rest_time"] = exercise["rest_time"]
+        exercises[exercise_id]["sets"].append(
             {"weight": exercise["weight"], "repetitions": exercise["repetitions"]}
         )
 
-    print("routine_id", routine_id)
-    print("routine_name", routine[0]["name"])
-    for key, value in exercises_grouped.items():
-        print(key, value)
+    for _, items in exercises.items():
+        print(items)
 
-    return "asfjd"
+    return render_template(
+        "view.html",
+        routine_id=routine_id,
+        routine_name=routine[0]["name"],
+        exercises=exercises,
+    )
 
 
 @app.route("/signup", methods=["GET", "POST"])

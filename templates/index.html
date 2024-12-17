@@ -30,11 +30,9 @@
                         <p>{{ routine.exercises }}</p>
                         <div class="button-wrapper flex">
                             <form action="/edit/{{ routine.id }}" method="post">
-                                <input id="routine-{{ routine.id }}-id" name="routine-{{ routine.id }}-id" type="hidden" value="{{ routine.id }}">
                                 <button class="btn" type="submit">Edit</button>
                             </form>
                             <form action="/edit/{{ routine.id }}" method="post">
-                                <input id="routine-{{ routine.id }}-id" name="routine-{{ routine.id }}-id" type="hidden" value="{{ routine.id }}">
                                 <button class="btn" type="submit">Remove</button>
                             </form>
                         </div>
