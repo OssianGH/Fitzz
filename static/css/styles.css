@@ -224,6 +224,12 @@ header .square-btn {
 
 .select-group .input {
   display: block;
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
+}
+
+.select-group .input.static {
+  pointer-events: none;
 }
 
 .select-label {
