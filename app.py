@@ -111,24 +111,6 @@ def index():
 def delete(routine_id):
     """Delete a previously created routine given its ID"""
 
-    # Query database for routine of the user with the given ID
-    routine = db.execute(
-        "SELECT name FROM routine WHERE id = ? AND user_id = ?",
-        routine_id,
-        session["user_id"],
-    )
-
-    # Ensure routine exists
-    if not routine:
-        return display_error("Routine not found.")
-
-    # Delete routine from database (since routine_exercise and routine_set have ON
-    # DELETE CASCADE, they will be deleted as well)
-    db.execute(
-        "DELETE FROM routine WHERE id = ? AND user_id = ?",
-        routine_id,
-        session["user_id"],
-    )
 
     # Redirect user to home page
     return redirect("/")
@@ -162,7 +144,16 @@ def edit(routine_id):
 @app.route("/edit", methods=["POST"])
 @login_required
 def edit_routine():
-    """Edit a previously created routine"""
+    """Validate and make the modifications to the routine"""
+
+    # Access form routine ID
+    routine_id = request.form.get("routine-id")
+
+    # Ensure routine ID was submitted
+    if not routine_id:
+        return display_error()
+    
+
 
     return display_error("Not implemented yet.")
 

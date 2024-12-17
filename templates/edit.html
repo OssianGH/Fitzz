@@ -24,6 +24,7 @@
     <div class="container">
         <form id="routine-form" action="/edit" method="post">
             <input class="special-input" id="routine-name" name="routine-name" type="text" placeholder="Routine name" autocomplete="off" value="{{ routine_name }}">
+            <input id="routine-id" name="routine-id" type="hidden" value="{{ routine_id }}">
             <input id="exercise-count" name="exercise-count" type="hidden" value="{{ exercises | length }}">
             <div id="exercises">
                 {% for id, exercise in exercises.items() %}
