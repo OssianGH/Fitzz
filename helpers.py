@@ -29,6 +29,23 @@ def format_add_exercise(exercise_id):
     return f"addExercise({exercise_id}, event)"
 
 
+def format_seconds(seconds):
+    """Format seconds to string of minutes and seconds."""
+
+    if seconds < 60:
+        # Return the seconds if less than a minute
+        return f"{seconds} s"
+
+    # Calculate the minutes
+    minutes = seconds // 60
+
+    # Calculate the remaining seconds
+    remaining_seconds = seconds % 60
+
+    # Return the formatted time in minutes and seconds
+    return f"{minutes} min {remaining_seconds} s"
+
+
 def login_required(f):
     """
     Decorate routes to require login.
