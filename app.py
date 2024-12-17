@@ -256,9 +256,9 @@ def logout():
     return redirect("/")
 
 
-@app.route("/routine/new", methods=["GET", "POST"])
+@app.route("/new", methods=["GET", "POST"])
 @login_required
-def routine_new():
+def new():
     """Create a new routine"""
 
     # User reached route via POST (as by submitting a form via POST)
