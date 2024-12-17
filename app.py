@@ -158,7 +158,22 @@ def edit_post():
     if not routine_id:
         return display_error()
 
-    return display_error("Not implemented yet.")
+    # Remove routine from database
+    try:
+        remove_routine(routine_id)
+    except ValueError as e:
+        return display_error(str(e))
+
+    # Create routine
+    try:
+        create_routine()
+    except ValueError as e:
+        return display_error(str(e))
+    except SystemError:
+        return display_error()
+
+    # Redirect user to home page
+    return redirect("/")
 
 
 @app.route("/exercise/<int:exercise_id>")
