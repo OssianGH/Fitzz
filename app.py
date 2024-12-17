@@ -99,7 +99,9 @@ def index():
 @app.route("/exercise/<int:exercise_id>")
 @login_required
 def get_exercise(exercise_id):
-    # Query database for exercise with the id
+    """Get exercise details from the database given its ID"""
+
+    # Query database for exercise with the given id
     exercise = db.execute(
         """
             SELECT
@@ -112,18 +114,20 @@ def get_exercise(exercise_id):
             WHERE exercise.id = ?
         """,
         exercise_id,
-    )[0]
+    )
 
-    if exercise:
-        return jsonify(
-            {
-                "id": exercise["id"],
-                "name": exercise["name"],
-                "muscle_group": exercise["muscle_group"],
-            }
-        )
-    else:
-        return jsonify({"error": "Exercise not found"}), 404
+    # Ensure exercise exists
+    if not exercise:
+        return display_error()
+
+    # Return exercise details as JSON
+    return jsonify(
+        {
+            "id": exercise[0]["id"],
+            "name": exercise[0]["name"],
+            "muscle_group": exercise[0]["muscle_group"],
+        }
+    )
 
 
 @app.route("/login", methods=["GET", "POST"])
