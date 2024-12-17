@@ -51,10 +51,10 @@
                 </div>
             {% endfor %}
         <div class="flex gap center-justify">
-            <form action="/edit/{{ routine_id }}" method="post">
+            <form action="/edit/{{ routine_id }}" method="get">
                 <button class="btn" type="submit">Edit</button>
             </form>
-            <form action="/delete/{{ routine_id }}" method="post">
+            <form action="/delete/{{ routine_id }}" method="get">
                 <button class="btn" type="submit">Delete</button>
             </form>
         </div>

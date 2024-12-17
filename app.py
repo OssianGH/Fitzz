@@ -123,12 +123,20 @@ def delete(routine_id):
     return redirect("/")
 
 
-@app.route("/edit/<int:routine_id>", methods=["GET", "POST"])
+@app.route("/edit/<int:routine_id>")
 @login_required
 def edit(routine_id):
-    """Edit a routine"""
+    """Edit a previously created routine given its ID"""
 
-    return display_error("Not implemented yet.")
+    routine_name, exercises = fetch_routine(routine_id)
+
+    return render_template(
+        "edit.html",
+        routine_id=routine_id,
+        routine_name=routine_name,
+        exercises=exercises,
+    )
+
 
 @app.route("/exercise/<int:exercise_id>")
 @login_required
@@ -505,6 +513,19 @@ def signup():
 def view(routine_id):
     """View a previously created routine given its ID"""
 
+    routine_name , exercises = fetch_routine(routine_id)
+
+    return render_template(
+        "view.html",
+        routine_id=routine_id,
+        routine_name=routine_name,
+        exercises=exercises,
+    )
+
+
+def fetch_routine(routine_id):
+    """Get routine details given its ID"""
+
     # Query database for routine of the user with the given ID
     routine = db.execute(
         "SELECT name FROM routine WHERE id = ? AND user_id = ?",
@@ -556,12 +577,4 @@ def view(routine_id):
             {"weight": exercise["weight"], "repetitions": exercise["repetitions"]}
         )
 
-    for _, items in exercises.items():
-        print(items)
-
-    return render_template(
-        "view.html",
-        routine_id=routine_id,
-        routine_name=routine[0]["name"],
-        exercises=exercises,
-    )
+    return routine[0]["name"], exercises
