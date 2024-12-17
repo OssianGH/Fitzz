@@ -266,6 +266,12 @@ def new_routine():
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
         # Create routine
+        try:
+            create_routine()
+        except ValueError as e:
+            return display_error(str(e))
+        except SystemError:
+            return display_error()
 
         # Redirect user to home page
         return redirect("/")
@@ -351,6 +357,176 @@ def view(routine_id):
         routine_name=routine_name,
         exercises=exercises,
     )
+
+
+def create_routine():
+    # Access form routine name
+    routine_name = request.form.get("routine-name")
+
+    # Ensure routine name was submitted
+    if not routine_name:
+        raise ValueError("Routine name must be filled.")
+
+    # Access form exercise count
+    exercise_count = request.form.get("exercise-count")
+
+    # Ensure exercise count was submitted
+    if not exercise_count:
+        raise SystemError()
+
+    # Ensure exercise count is integer
+    try:
+        exercise_count = int(exercise_count)
+    except:
+        raise SystemError()
+
+    # Ensure the routine has at least one exercise
+    if exercise_count < 1:
+        raise ValueError("There must be at least one exercise in the routine.")
+
+    # Dictionary to store exercises and sets
+    exercises_data = {}
+
+    # Loop through each exercise
+    for exercise_number in range(1, exercise_count + 1):
+        # Access form current exercise ID
+        exercise_id = request.form.get(f"exercise-{exercise_number}-id")
+
+        # Ensure current exercise ID was submitted
+        if not exercise_id:
+            raise SystemError()
+
+        # Access form current exercise set count
+        exercise_set_count = request.form.get(f"exercise-{exercise_number}-set-count")
+
+        # Ensure current exercise set count was submitted
+        if not exercise_set_count:
+            raise SystemError()
+
+        # Ensure current exercise set count is integer
+        try:
+            exercise_set_count = int(exercise_set_count)
+        except:
+            raise SystemError()
+
+        # Ensure the current exercise has at least one set
+        if exercise_set_count < 1:
+            raise ValueError(f"Exercise {exercise_number} must have at least one set.")
+
+        # Access form current exercise rest time
+        exercise_rest = request.form.get(f"exercise-{exercise_number}-rest")
+
+        # Ensure current exercise rest time was submitted
+        if not exercise_rest:
+            exercise_rest = 0
+        else:
+            # Ensure current exercise rest time is integer
+            try:
+                exercise_rest = int(exercise_rest)
+            except:
+                raise ValueError(
+                    f"Exercise {exercise_number} rest time must be an integer"
+                )
+
+        # Ensure current exercise rest time is positive
+        if exercise_rest < 0:
+            raise ValueError(f"Exercise {exercise_number} rest time must be positive.")
+
+        # Ensure current exercise rest time is less than 300 seconds
+        if exercise_rest > 300:
+            raise ValueError(f"Exercise {exercise_number} rest time is too long.")
+
+        # Ensure current exercise rest time is multiple of 5
+        if exercise_rest % 5 != 0:
+            raise ValueError(f"Exercise {exercise_number} rest time is invalid.")
+
+        # List to store sets of the current exercise
+        exercise_sets = []
+
+        # Loop through each set of the current exercise
+        for set_number in range(1, exercise_set_count + 1):
+            # Access form current set weight
+            weight = request.form.get(
+                f"exercise-{exercise_number}-set-{set_number}-weight"
+            )
+
+            # Ensure current set weight was submitted
+            if not weight:
+                raise ValueError(
+                    f"Missing exercise {exercise_number} set {set_number} weight."
+                )
+
+            # Ensure current set weight is integer
+            try:
+                weight = int(weight)
+            except:
+                raise ValueError(
+                    f"Exercise {exercise_number} set {set_number} weight must be an integer."
+                )
+
+            # Ensure current set weight is positive
+            if weight < 1:
+                raise ValueError(
+                    f"Exercise {exercise_number} set {set_number} weight must be positive."
+                )
+
+            # Access form current set reps
+            reps = request.form.get(f"exercise-{exercise_number}-set-{set_number}-reps")
+
+            # Ensure current set reps was submitted
+            if not reps:
+                raise ValueError(
+                    f"Missing exercise {exercise_number} set {set_number} reps."
+                )
+
+            # Ensure current set reps is integer
+            try:
+                reps = int(reps)
+            except:
+                raise ValueError(
+                    f"Exercise {exercise_number} set {set_number} reps must be an integer."
+                )
+
+            # Ensure current set reps is positive
+            if reps < 1:
+                raise ValueError(
+                    f"Exercise {exercise_number} set {set_number} reps must be positive."
+                )
+
+            # Add set data to the list
+            exercise_sets.append({"weight": weight, "reps": reps})
+
+        # Store the sets under the exercise ID
+        exercises_data[exercise_id] = {
+            "rest_time": exercise_rest,
+            "sets": exercise_sets,
+        }
+
+    # Insert routine into database
+    routine_id = db.execute(
+        "INSERT INTO routine (user_id, name) VALUES (?, ?)",
+        session["user_id"],
+        routine_name.strip(),
+    )
+
+    # Insert exercises of the routine into database
+    for position, (exercise_id, exercise) in enumerate(exercises_data.items(), start=1):
+        routine_exercise_id = db.execute(
+            "INSERT INTO routine_exercise (routine_id, exercise_id, position, rest_time) VALUES (?, ?, ?, ?)",
+            routine_id,
+            exercise_id,
+            position,
+            exercise["rest_time"],
+        )
+        # Insert sets of the current exercise into database
+        for set_number, routine_set in enumerate(exercise["sets"], start=1):
+            db.execute(
+                "INSERT INTO routine_set (routine_exercise_id, set_number, weight, repetitions) VALUES (?, ?, ?, ?)",
+                routine_exercise_id,
+                set_number,
+                routine_set["weight"],
+                routine_set["reps"],
+            )
 
 
 def fetch_exercises():
