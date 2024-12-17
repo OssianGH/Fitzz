@@ -423,29 +423,8 @@ def new():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        # Query database for muscle groups
-        muscle_groups = db.execute("SELECT * FROM muscle_group")
 
-        # Query database for exercises
-        exercises = db.execute("SELECT id, name, muscle_group_id FROM exercise")
-
-        # Map muscle_group IDs to their names
-        muscle_group_map = {
-            muscle_group["id"]: muscle_group["name"] for muscle_group in muscle_groups
-        }
-
-        # Create a dictionary to store exercises by muscle group
-        exercises_by_muscle = defaultdict(list)
-
-        # Loop through exercises
-        for exercise in exercises:
-            # Get the muscle group name
-            muscle_group_name = muscle_group_map[exercise["muscle_group_id"]]
-
-            # Add exercise to the dictionary
-            exercises_by_muscle[muscle_group_name].append(
-                {"id": exercise["id"], "name": exercise["name"]}
-            )
+        exercises_by_muscle = fetch_exercises()
 
         # Display new routine page
         return render_template(
@@ -578,3 +557,31 @@ def fetch_routine(routine_id):
         )
 
     return routine[0]["name"], exercises
+
+
+def fetch_exercises():
+    # Query database for muscle groups
+    muscle_groups = db.execute("SELECT * FROM muscle_group")
+
+    # Query database for exercises
+    exercises = db.execute("SELECT id, name, muscle_group_id FROM exercise")
+
+    # Map muscle_group IDs to their names
+    muscle_group_map = {
+        muscle_group["id"]: muscle_group["name"] for muscle_group in muscle_groups
+    }
+
+    # Create a dictionary to store exercises by muscle group
+    exercises_by_muscle = defaultdict(list)
+
+    # Loop through exercises
+    for exercise in exercises:
+        # Get the muscle group name
+        muscle_group_name = muscle_group_map[exercise["muscle_group_id"]]
+
+        # Add exercise to the dictionary
+        exercises_by_muscle[muscle_group_name].append(
+            {"id": exercise["id"], "name": exercise["name"]}
+        )
+
+    return exercises_by_muscle
