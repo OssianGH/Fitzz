@@ -128,6 +128,77 @@ def get_exercise(exercise_id):
     )
 
 
+@app.route("/routine/<int:routine_id>")
+@login_required
+def get_routine(routine_id):
+    """Get routine details from the database given its ID"""
+
+    # Query database for routine of the user with the given id
+    routine_name = db.execute(
+        "SELECT name FROM routine WHERE id = ? AND user_id = ?",
+        routine_id,
+        session["user_id"],
+    )
+
+    # Ensure routine exists
+    if not routine_name:
+        return display_error()
+
+    # Query database for exercises and sets of the routine of the user with the given id
+    exercises = db.execute(
+        """
+            SELECT 
+                e.id as exercise_id,
+                e.name as exercise_name,
+                re.rest_time,
+                rs.weight,
+                rs.repetitions
+            FROM routine r
+            JOIN routine_exercise re ON r.id = re.routine_id
+            JOIN exercise e ON re.exercise_id = e.id
+            JOIN routine_set rs ON re.id = rs.routine_exercise_id
+            WHERE r.id = ? AND r.user_id = ?
+            ORDER BY re.position, rs.set_number;
+        """,
+        routine_id,
+        session["user_id"],
+    )
+
+    # Dictionary to store exercises and sets
+    exercises_grouped = defaultdict(
+        lambda: {"exercise_name": "", "rest_time": 0, "sets": []}
+    )
+
+    # Loop through each exercise
+    for exercise in exercises:
+        # Get the exercise ID
+        exercise_id = exercise["exercise_id"]
+
+        # Add exercise data to the dictionary
+        exercises_grouped[exercise_id]["exercise_name"] = exercise["exercise_name"]
+        exercises_grouped[exercise_id]["rest_time"] = exercise["rest_time"]
+        exercises_grouped[exercise_id]["sets"].append(
+            {"weight": exercise["weight"], "repetitions": exercise["repetitions"]}
+        )
+
+    # Return routine details as JSON
+    return jsonify(
+        {
+            "routine_id": routine_id,
+            "routine_name": routine_name[0]["name"],
+            "exercises": [
+                {
+                    "exercise_id": key,
+                    "exercise_name": value["exercise_name"],
+                    "rest_time": value["rest_time"],
+                    "sets": value["sets"],
+                }
+                for key, value in exercises_grouped.items()
+            ],
+        }
+    )
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
@@ -406,6 +477,14 @@ def routine_new():
             "routines_new.html",
             exercises_by_muscle=exercises_by_muscle,
         )
+
+
+@app.route("/routine/view", methods=["POST"])
+@login_required
+def routine_view():
+    """View routine exercises and sets"""
+
+    return "Por implementar"
 
 
 @app.route("/signup", methods=["GET", "POST"])

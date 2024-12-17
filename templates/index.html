@@ -24,17 +24,17 @@
             </div>
             {% for routine in routines %}
                 <div class="card">
-                    <a href="/routine/view/{{ loop.index }}">
+                    <a href="/routine/{{ routine.id }}">
 
                         <h3 class="h3 no-margin">{{ routine.name }}</h3>
                         <p>{{ routine.exercises }}</p>
                         <div class="button-wrapper flex">
                             <form action="/routine/edit" method="post">
-                                <input id="routine-{{ loop.index }}-id" name="routine-{{ loop.index }}-id" type="hidden" value="{{ routine.id }}">
+                                <input id="routine-{{ routine.id }}-id" name="routine-{{ routine.id }}-id" type="hidden" value="{{ routine.id }}">
                                 <button class="btn" type="submit">Edit</button>
                             </form>
                             <form action="/routine/remove" method="post">
-                                <input id="routine-{{ loop.index }}-id" name="routine-{{ loop.index }}-id" type="hidden" value="{{ routine.id }}">
+                                <input id="routine-{{ routine.id }}-id" name="routine-{{ routine.id }}-id" type="hidden" value="{{ routine.id }}">
                                 <button class="btn" type="submit">Remove</button>
                             </form>
                         </div>
