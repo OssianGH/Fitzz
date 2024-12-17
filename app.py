@@ -10,6 +10,11 @@ from helpers import (
     display_error,
     exercise_image,
     format_add_exercise,
+    format_add_set,
+    format_move_exercise_down,
+    format_move_exercise_up,
+    format_remove_exercise,
+    format_remove_set,
     format_seconds,
     login_required,
     muscle_group_image,
@@ -21,6 +26,11 @@ app = Flask(__name__)
 # Custom filters
 app.jinja_env.filters["exercise_image"] = exercise_image
 app.jinja_env.filters["format_add_exercise"] = format_add_exercise
+app.jinja_env.filters["format_add_set"] = format_add_set
+app.jinja_env.filters["format_move_exercise_down"] = format_move_exercise_down
+app.jinja_env.filters["format_move_exercise_up"] = format_move_exercise_up
+app.jinja_env.filters["format_remove_exercise"] = format_remove_exercise
+app.jinja_env.filters["format_remove_set"] = format_remove_set
 app.jinja_env.filters["format_seconds"] = format_seconds
 app.jinja_env.filters["muscle_group_image"] = muscle_group_image
 

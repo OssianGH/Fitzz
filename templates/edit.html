@@ -39,16 +39,16 @@
                                 <h3 class="h3 text-center no-margin">{{ exercise.name }}</h3>
                             </div>
                             <div class="button-wrapper flex">
-                                <button class="square-btn" id="exercise-{{ loop.index }}-add-set" type="button"     ="">
+                                <button class="square-btn" id="exercise-{{ loop.index }}-add-set" type="button" onclick="{{ loop.index | format_add_set }}">
                                     <i class="fa fa-plus"></i>
                                 </button>
-                                <button class="square-btn" id="exercise-{{ loop.index }}-remove" type="button" onclick="">
+                                <button class="square-btn" id="exercise-{{ loop.index }}-remove" type="button" onclick="{{ loop.index | format_remove_exercise }}">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                                <button class="square-btn" id="exercise-{{ loop.index }}-move-up" type="button" onclick="">
+                                <button class="square-btn" id="exercise-{{ loop.index }}-move-up" type="button" onclick="{{ loop.index | format_move_exercise_up }}">
                                     <i class="fa fa-arrow-up"></i>
                                 </button>
-                                <button class="square-btn" id="exercise-{{ loop.index }}-move-down" type="button" onclick="">
+                                <button class="square-btn" id="exercise-{{ loop.index }}-move-down" type="button" onclick="{{ loop.index | format_move_exercise_down }}">
                                     <i class="fa fa-arrow-down"></i>
                                 </button>
                             </div>
@@ -71,7 +71,7 @@
                                             <label class="input-label">Reps</label>
                                         </div>
                                     </div>
-                                    <button class="square-btn" id="exercise-{{ outer_loop.index }}-set-{{ loop.index }}-remove" type="button" onclick="">
+                                    <button class="square-btn" id="exercise-{{ outer_loop.index }}-set-{{ loop.index }}-remove" type="button" onclick="{{ outer_loop.index | format_remove_set(loop.index) }}">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </div>

@@ -24,9 +24,39 @@ def exercise_image(name, muscle_group):
 
 
 def format_add_exercise(exercise_id):
-    """Format the exercise id for onclick property of Add exercise button."""
+    """Format text for onclick property of Add exercise button."""
 
     return f"addExercise({exercise_id}, event)"
+
+
+def format_add_set(exercise_number):
+    """Format text for onclick property of Add set button."""
+
+    return f"addSet({exercise_number})"
+
+
+def format_move_exercise_down(exercise_number):
+    """Format text for onclick property of Move exercise down button."""
+
+    return f"moveExerciseDown({exercise_number})"
+
+
+def format_move_exercise_up(exercise_number):
+    """Format text for onclick property of Move exercise up button."""
+
+    return f"moveExerciseUp({exercise_number})"
+
+
+def format_remove_exercise(exercise_number):
+    """Format text for onclick property of Remove exercise button."""
+
+    return f"removeExercise({exercise_number})"
+
+
+def format_remove_set(exercise_number, set_number):
+    """Format text for onclick property of Remove set button."""
+
+    return f"removeSet({exercise_number}, {set_number})"
 
 
 def format_seconds(seconds):
