@@ -95,6 +95,7 @@ def index():
     # Display welcome page
     return render_template("index.html", username=user["username"], routines=routines)
 
+
 @app.route("/delete/<int:routine_id>")
 @login_required
 def delete(routine_id):
@@ -111,7 +112,7 @@ def delete(routine_id):
     if not routine:
         return display_error("Routine not found.")
 
-    # Delete routine from database (since routine_exercise and routine_set have ON 
+    # Delete routine from database (since routine_exercise and routine_set have ON
     # DELETE CASCADE, they will be deleted as well)
     db.execute(
         "DELETE FROM routine WHERE id = ? AND user_id = ?",
@@ -128,14 +129,28 @@ def delete(routine_id):
 def edit(routine_id):
     """Edit a previously created routine given its ID"""
 
+    # Get exercises by muscle group
+    exercises_by_muscle = fetch_exercises()
+
+    # Get routine data
     routine_name, exercises = fetch_routine(routine_id)
 
+    # Display the edit routine page
     return render_template(
         "edit.html",
+        exercises_by_muscle=exercises_by_muscle,
         routine_id=routine_id,
         routine_name=routine_name,
         exercises=exercises,
     )
+
+
+@app.route("/edit", methods=["POST"])
+@login_required
+def edit_routine():
+    """Edit a previously created routine"""
+
+    return display_error("Not implemented yet.")
 
 
 @app.route("/exercise/<int:exercise_id>")
@@ -231,7 +246,7 @@ def logout():
 
 @app.route("/new", methods=["GET", "POST"])
 @login_required
-def new():
+def new_routine():
     """Create a new routine"""
 
     # User reached route via POST (as by submitting a form via POST)
@@ -423,7 +438,7 @@ def new():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-
+        # Get exercises by muscle group
         exercises_by_muscle = fetch_exercises()
 
         # Display new routine page
@@ -492,8 +507,10 @@ def signup():
 def view(routine_id):
     """View a previously created routine given its ID"""
 
-    routine_name , exercises = fetch_routine(routine_id)
+    # Get routine data
+    routine_name, exercises = fetch_routine(routine_id)
 
+    # Display the view routine page
     return render_template(
         "view.html",
         routine_id=routine_id,
