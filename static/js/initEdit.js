@@ -11,9 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Loop through each exercise in the container
   Array.from(exercisesContainer.children).forEach((exercise, index) => {
-    // Add the rest time options
-    addRestTimeOptions(exercise, `exercise-${index + 1}`);
-
     // Get the sets container
     const setsContainer = document.getElementById(`exercise-${index + 1}-sets`);
 

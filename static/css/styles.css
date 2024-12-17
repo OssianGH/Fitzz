@@ -434,6 +434,7 @@ header .square-btn {
 .image-container .image {
   border-radius: 50%;
   width: 94%;
+  pointer-events: none;
 }
 
 .card a {

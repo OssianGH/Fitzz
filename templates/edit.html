@@ -55,7 +55,11 @@
                         </div>
                         <div class="select-group">
                             <label class="select-label">Rest time</label>
-                            <select class="input" id="exercise-{{ loop.index }}-rest" name="exercise-{{ loop.index }}-rest"></select>
+                            <select class="input" id="exercise-{{ loop.index }}-rest" name="exercise-{{ loop.index }}-rest">
+                                {% for time in times %}
+                                    <option value="{{ time.value }}" {% if time.value == exercise.rest_time %} selected {% endif %}>{{ time.text }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div id="exercise-{{ loop.index }}-sets">
                             {% for set in exercise.sets %}

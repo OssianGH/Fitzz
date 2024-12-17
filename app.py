@@ -145,13 +145,17 @@ def edit(routine_id):
     # Get routine data
     routine_name, exercises = fetch_routine(routine_id)
 
+    # Generate times for the rest time dropdown
+    times = [{"value": i, "text": format_seconds(i)} for i in range(0, 301, 5)]
+
     # Display the edit routine page
     return render_template(
         "edit.html",
-        exercises_by_muscle=exercises_by_muscle,
         routine_id=routine_id,
         routine_name=routine_name,
         exercises=exercises,
+        times=times,
+        exercises_by_muscle=exercises_by_muscle,
     )
 
 
