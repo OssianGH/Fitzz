@@ -32,9 +32,11 @@
             <div class="container separate"></div>
         </form>
     </div>
-    <div id="overlay" class="overlay">
-        <div id="overlay-content" class="overlay-content">
-            <button class="square-btn" id="hide-overlay"><i class="fa fa-x"></i></button>
+    <div class="overlay" id="overlay">
+        <div class="overlay-content" id="overlay-content">
+            <button class="square-btn" id="hide-overlay">
+                <i class="fa fa-x"></i>
+            </button>
             <div class="title-region flex center-justify center-align">
                 <h2 class="h2 text-center no-margin">Add exercise</h2>
             </div>
@@ -48,7 +50,7 @@
                 <div class="exercises grid">
                     {% for exercise in exercises %}
                         <div class="card">
-                            <a href="#" onclick="{{ exercise.id | format_add_exercise }}" class="flex column center-align between-justify">
+                            <a class="flex column center-align between-justify" href="#" onclick="{{ exercise.id | format_add_exercise }}">
                                 <div class="image-container">
                                     <img class="image" src="{{ exercise.name | exercise_image(muscle_group) }}" alt="{{ exercise.name }}">
                                 </div>
