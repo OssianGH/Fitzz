@@ -3,3 +3,4 @@ Flask
 Werkzeug
 Flask-Session
 pytz
+flet
