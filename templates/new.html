@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+    <script src="/static/js/addExercise.js"></script>
+    <script src="/static/js/addSet.js"></script>
+    <script src="/static/js/collapse.js"></script>
+    <script src="/static/js/input.js"></script>
+    <script src="/static/js/moveExercise.js"></script>
+    <script src="/static/js/overlay.js"></script>
+    <script src="/static/js/removeExercise.js"></script>
+    <script src="/static/js/removeSet.js"></script>
+    <script src="/static/js/validateRoutine.js"></script>
+{% endblock %}
+
+{% block title %}
+    New routine
+{% endblock %}
+
+{% block main %}
+    <div class="container title-region flex center-justify center-align">
+        <h1 class="h1 text-center no-margin">New routine</h1>
+    </div>
+    <div class="container">
+        <form id="routine-form" action="/new" method="post">
+            <input class="special-input" id="routine-name" name="routine-name" type="text" placeholder="Routine name" autocomplete="off">
+            <input id="exercise-count" name="exercise-count" type="hidden" value="0">
+            <div id="exercises"></div>
+            <div class="flex gap center-justify">
+                <button class="btn" id="add-exercise" type="button">Add exercise</button>
+                <button class="btn" type="submit">Save routine</button>
+            </div>
+            <div class="container separate"></div>
+        </form>
+    </div>
+    <div class="overlay" id="overlay">
+        <div class="overlay-content" id="overlay-content">
+            <button class="square-btn" id="hide-overlay">
+                <i class="fa fa-x"></i>
+            </button>
+            <div class="title-region flex center-justify center-align">
+                <h2 class="h2 text-center no-margin">Add exercise</h2>
+            </div>
+            {% for muscle_group, exercises in exercises_by_muscle.items() %}
+                <div class="muscle flex gap center-align">
+                    <div class="image-container">
+                        <img class="image" src="{{ muscle_group | muscle_group_image }}">
+                    </div>
+                    <h3 class="h3 no-margin">{{ muscle_group }}</h3>
+                </div>
+                <div class="exercises grid">
+                    {% for exercise in exercises %}
+                        <div class="card">
+                            <a class="flex column center-align between-justify" href="#" onclick="{{ exercise.id | format_add_exercise }}">
+                                <div class="image-container">
+                                    <img class="image" src="{{ exercise.name | exercise_image(muscle_group) }}" alt="{{ exercise.name }}">
+                                </div>
+                                <div class="info">
+                                    <p class="info-name no-margin">{{ exercise.name }}</p>
+                                    <p class="info-muscle no-margin">{{ muscle_group }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="overlay" id="loader">
+        <div class="loader"></div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+    <script src="/static/js/collapse.js"></script>
+{% endblock %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block main %}
+    <div class="errorpage">
+        <div class="displayer">
+            <div class="box flex column center-justify">
+                <div class="flex gap center-align">
+                    <img alt="burger" src="/static/images/burger.webp">
+                    <h1 class="h3 no-margin">Error</h1>
+                </div>
+                <p>{{ message }}</p>
+                <p class="quote">Don't eat the wrong meal.</p>
+                <div>
+                    <button class="btn" onclick="window.history.back()">Go back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

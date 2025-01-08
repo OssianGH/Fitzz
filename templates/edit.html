@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+    <script src="/static/js/addExercise.js"></script>
+    <script src="/static/js/addSet.js"></script>
+    <script src="/static/js/collapse.js"></script>
+    <script src="/static/js/initEdit.js"></script>
+    <script src="/static/js/input.js"></script>
+    <script src="/static/js/moveExercise.js"></script>
+    <script src="/static/js/overlay.js"></script>
+    <script src="/static/js/removeExercise.js"></script>
+    <script src="/static/js/removeSet.js"></script>
+    <script src="/static/js/validateRoutine.js"></script>
+{% endblock %}
+
+{% block title %}
+    Edit routine
+{% endblock %}
+
+{% block main %}
+    <div class="container title-region flex center-justify center-align">
+        <h1 class="h1 text-center no-margin">Edit routine</h1>
+    </div>
+    <div class="container">
+        <form id="routine-form" action="/edit" method="post">
+            <input class="special-input" id="routine-name" name="routine-name" type="text" placeholder="Routine name" autocomplete="off" value="{{ routine_name }}">
+            <input id="routine-id" name="routine-id" type="hidden" value="{{ routine_id }}">
+            <input id="exercise-count" name="exercise-count" type="hidden" value="{{ exercises | length }}">
+            <div id="exercises">
+                {% for id, exercise in exercises.items() %}
+                    {% set outer_loop = loop %}
+                    <div class="exercise" id="exercise-{{ loop.index }}">
+                        <input id="exercise-{{ loop.index}}-id" name="exercise-{{ loop.index }}-id" type="hidden" value="{{ id }}">
+                        <input id="exercise-{{ loop.index }}-set-count" name="exercise-{{ loop.index }}-set-count" type="hidden" value="{{ exercise.sets | length }}">
+                        <div class="exercise-name flex gap center-align between-justify">
+                            <div class="flex gap center-align">
+                                <div class="image-container">
+                                    <img class="image" src="{{ exercise.name | exercise_image(exercise.muscle_group) }}" alt="{{ exercise.name }}">
+                                </div>
+                                <h3 class="h3 text-center no-margin">{{ exercise.name }}</h3>
+                            </div>
+                            <div class="button-wrapper flex">
+                                <button class="square-btn" id="exercise-{{ loop.index }}-add-set" type="button" onclick="{{ loop.index | format_add_set }}">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                                <button class="square-btn" id="exercise-{{ loop.index }}-remove" type="button" onclick="{{ loop.index | format_remove_exercise }}">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                <button class="square-btn" id="exercise-{{ loop.index }}-move-up" type="button" onclick="{{ loop.index | format_move_exercise_up }}">
+                                    <i class="fa fa-arrow-up"></i>
+                                </button>
+                                <button class="square-btn" id="exercise-{{ loop.index }}-move-down" type="button" onclick="{{ loop.index | format_move_exercise_down }}">
+                                    <i class="fa fa-arrow-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="select-group">
+                            <label class="select-label">Rest time</label>
+                            <select class="input" id="exercise-{{ loop.index }}-rest" name="exercise-{{ loop.index }}-rest">
+                                {% for time in times %}
+                                    <option value="{{ time.value }}" {% if time.value == exercise.rest_time %} selected {% endif %}>{{ time.text }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div id="exercise-{{ loop.index }}-sets">
+                            {% for set in exercise.sets %}
+                                <div class="exercise-set flex gap center-align" id="exercise-{{ outer_loop.index }}-set-{{ loop.index }}">
+                                    <p class="no-margin" id="exercise-{{ outer_loop.index }}-set-{{ loop.index }}-label">{{ loop.index }}</p>
+                                    <div class="input-wrapper flex gap center-align evenly-justify">
+                                        <div class="input-group">
+                                            <input class="input active" id="exercise-{{ outer_loop.index }}-set-{{ loop.index }}-weight" name="exercise-{{ outer_loop.index }}-set-{{ loop.index }}-weight" type="number" autocomplete="off" min="1" value="{{ set.weight }}">
+                                            <label class="input-label">Weight</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <input class="input active" id="exercise-{{ outer_loop.index }}-set-{{ loop.index }}-reps" name="exercise-{{ outer_loop.index }}-set-{{ loop.index }}-reps" type="number" autocomplete="off" min="1" value="{{ set.repetitions }}">
+                                            <label class="input-label">Reps</label>
+                                        </div>
+                                    </div>
+                                    <button class="square-btn" id="exercise-{{ outer_loop.index }}-set-{{ loop.index }}-remove" type="button" onclick="{{ outer_loop.index | format_remove_set(loop.index) }}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="flex gap center-justify">
+                <button class="btn" id="add-exercise" type="button">Add exercise</button>
+                <button class="btn" type="submit">Save routine</button>
+            </div>
+            <div class="container separate"></div>
+        </form>
+    </div>
+    <div class="overlay" id="overlay">
+        <div class="overlay-content" id="overlay-content">
+            <button class="square-btn" id="hide-overlay">
+                <i class="fa fa-x"></i>
+            </button>
+            <div class="title-region flex center-justify center-align">
+                <h2 class="h2 text-center no-margin">Add exercise</h2>
+            </div>
+            {% for muscle_group, exercises in exercises_by_muscle.items() %}
+                <div class="muscle flex gap center-align">
+                    <div class="image-container">
+                        <img class="image" src="{{ muscle_group | muscle_group_image }}">
+                    </div>
+                    <h3 class="h3 no-margin">{{ muscle_group }}</h3>
+                </div>
+                <div class="exercises grid">
+                    {% for exercise in exercises %}
+                        <div class="card">
+                            <a class="flex column center-align between-justify" href="#" onclick="{{ exercise.id | format_add_exercise }}">
+                                <div class="image-container">
+                                    <img class="image" src="{{ exercise.name | exercise_image(muscle_group) }}" alt="{{ exercise.name }}">
+                                </div>
+                                <div class="info">
+                                    <p class="info-name no-margin">{{ exercise.name }}</p>
+                                    <p class="info-muscle no-margin">{{ muscle_group }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="overlay" id="loader">
+        <div class="loader"></div>
+    </div>
+{% endblock %}

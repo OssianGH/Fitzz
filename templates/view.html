@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+    <script src="/static/js/collapse.js"></script>
+{% endblock %}
+
+{% block title %}
+    View routine
+{% endblock %}
+
+{% block main %}
+    <div class="container title-region flex center-justify center-align">
+        <h1 class="h1 text-center no-margin">View routine</h1>
+    </div>
+    <div class="container">
+        <h3 class="h2">{{ routine_name }}</h3>
+        <div>
+            {% for id, exercise in exercises.items() %}
+                <div class="exercise">
+                    <div class="exercise-name flex gap center-align between-justify">
+                        <div class="flex gap center-align">
+                            <div class="image-container">
+                                <img class="image" src="{{ exercise.name | exercise_image(exercise.muscle_group) }}" alt="{{ exercise.name }}">
+                            </div>
+                            <h3 class="h3 text-center no-margin">{{ exercise.name }}</h3>
+                        </div>
+                    </div>
+                    <div class="select-group">
+                        <label class="select-label">Rest time</label>
+                        <select class="input static">
+                            <option>{{ exercise.rest_time | format_seconds }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        {% for set in exercise.sets %}
+                            <div class="exercise-set flex gap center-align">
+                                <p class="no-margin"> {{ loop.index }} </p>
+                                <div class="input-wrapper flex gap center-align evenly-justify">
+                                    <div class="input-group">
+                                        <input class="input active" type="number" value="{{ set.weight }}" readonly>
+                                        <label class="input-label">Weight</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="input active" type="number" value="{{ set.repetitions }}" readonly>
+                                        <label class="input-label">Reps</label>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="flex gap center-justify">
+                <form action="/edit/{{ routine_id }}" method="get">
+                    <button class="btn" type="submit">Edit</button>
+                </form>
+                <form action="/delete/{{ routine_id }}" method="get">
+                    <button class="btn" type="submit">Delete</button>
+                </form>
+            </div>
+            <div class="container separate"></div>
+        </div>
+{% endblock %}

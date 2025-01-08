@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+    <script src="/static/js/collapse.js"></script>
+{% endblock %}
+
+{% block title %}
+    Welcome
+{% endblock %}
+
+{% block main %}
+    <div class="container title-region flex column center-justify">
+        <h1 class="h1 no-margin">Welcome, {{ username }}.</h1>
+        <p>Ready for workout?</p>
+    </div>
+    <div class="container">
+        <h2 class="h2">Routines</h2>
+        <div class="routines grid">
+            <div class="card add">
+                <a class="flex column center-justify center-align gap" href="/new">
+                    <i class="fa fa-plus"></i>
+                    <h3 class="h3 text-center no-margin">Create routine</h3>
+                </a>
+            </div>
+            {% for routine in routines %}
+                <div class="card">
+                    <a href="/view/{{ routine.id }}">
+
+                        <h3 class="h3 no-margin">{{ routine.name }}</h3>
+                        <p>{{ routine.exercises }}</p>
+                        <div class="button-wrapper flex">
+                            <form action="/edit/{{ routine.id }}" method="get">
+                                <button class="btn" type="submit">Edit</button>
+                            </form>
+                            <form action="/delete/{{ routine.id }}" method="get">
+                                <button class="btn" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </a>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

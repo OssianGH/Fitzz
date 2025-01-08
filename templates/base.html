@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://api.fontshare.com/v2/css?f[]=general-sans@500,600,400,700&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet">
+        <link href="/static/dumbbell.ico" rel="icon">
+        <link href="/static/css/styles.css" rel="stylesheet">
+        {% block scripts %}{% endblock %}
+        <title>Fitzz - {% block title %}{% endblock %}</title>
+    </head>
+
+    <body>
+        {% if session.get("user_id") %}
+            <header class="flex center-align between-justify">
+                <a href="/">
+                    <img alt="fitzz" src="/static/images/fitzz2.webp">
+                </a>
+                <nav class="collapse" id="nav">
+                    <ul>
+                        <li>
+                            <a href="/"><span>Routines</span></a>
+                        </li>
+                        <li>
+                            <a href="/new"><span>Create routine</span></a>
+                        </li>
+                        <li>
+                            <a href="/logout"><span>Log Out</span></a>
+                        </li>
+                    </ul>
+                </nav>
+                <button class="square-btn" id="toggle-nav">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </header>
+        {% endif %}
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+    </body>
+
+</html>
