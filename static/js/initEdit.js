@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Get the exercises container
   const exercisesContainer = document.getElementById('exercises');
 
-  // Bind the animation for the new inputs to display animation 
+  // Bind the animation for the new inputs to display animation
   bindInputListeners();
 
   // Display the move buttons
