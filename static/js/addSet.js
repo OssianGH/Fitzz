@@ -45,7 +45,7 @@ function addSet(exerciseNumber) {
   // Display the first remove set button
   displayFirstRemoveSetButton(exerciseNumber);
 
-  // Bind the animation for the new inputs to display animation 
+  // Bind the animation for the new inputs to display animation
   bindInputListeners();
 }
 
