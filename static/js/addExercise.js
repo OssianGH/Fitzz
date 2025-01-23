@@ -29,6 +29,7 @@ async function addExercise(exerciseId, event) {
   // Prevent the default anchor tag behavior
   event.preventDefault();
 
+  // Show overlay
   document.getElementById('loader').classList.add('active');
 
   // Check if the exercise is already added

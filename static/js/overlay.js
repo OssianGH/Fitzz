@@ -8,9 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showOverlay() {
-  // Remove hiding class if it exists
-  overlay.classList.remove('hiding');
-
   // Add active class to the overlay div
   document.getElementById('overlay').classList.add('active');
 }
