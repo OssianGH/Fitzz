@@ -2,7 +2,7 @@
 
 Fitzz is a web application designed for planning workout routines. It allows users to create, edit, and view their routines, add exercises to them, and define sets with different weights and repetitions. This project was developed as CS50x 2025 final project and showcases the use of **Flask**, **SQLite**, **HTML**/**CSS** and **JavaScript**. It follows a responsive design for use on various devices.
 
-The web application is accessible online [Fitzz on PythonAnywhere](https://ossianpa.pythonanywhere.com/), NOTE: This is a showcase project, the application resets every 3 months.
+The web application is accessible online [Fitzz on PythonAnywhere](https://ossianpa.pythonanywhere.com/). NOTE: This is a showcase project, the application resets every 3 months.
 
 ## Features
 
