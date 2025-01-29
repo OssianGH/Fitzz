@@ -121,3 +121,7 @@ erDiagram
 "routine_set" }o--|| "routine_exercise" : has
 "exercise" }o--|| "muscle_group" : belongs
 ```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
